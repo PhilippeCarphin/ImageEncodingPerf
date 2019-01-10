@@ -1,0 +1,18 @@
+* TP1 INF8770
+
+** Notes préliminaire
+   On a la liberté de choisir les hypothèses à démontrer
+   On peut utiliser des librairie externe pour l'encodage (avec sources)
+    
+** Question 1 : Hypothèses
+   
+
+** Question 2 : Expériences
+   
+*** Taux de compression
+*** rapidité d'opération
+*** type d'entrée
+
+** Question 3 : Description du code
+
+** Question 4 : Analyse des résultats
