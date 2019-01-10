@@ -33,6 +33,15 @@ def parse(op):
                         dest='algo',
                         help="Select encoding algorythms",)
 
+    parser.add_argument("-d", "--decode",
+                        dest='decode',
+                        help="",)
+
+    # incompatible with pairs
+    parser.add_argument("-p", "--prediction-formula",
+                        dest='prediction_formula',
+                        help="",)
+
     args = parser.parse_args()
 
     if not args.algo in AVAILABLE_ALGOS:
