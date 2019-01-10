@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import argparse
+import importlib
 
 from PIL import Image
 import numpy as np
@@ -57,9 +58,10 @@ def run(op):
         print(e)
         sys.exit(1)
 
-    if op['algo'] == 'pairs':
-        pass
-        # import algo.pairs as pairs
+    # MOCK
+    op['algo'] = 'mock'
+    algo = importlib.import_module('algo.' + op['algo'])
+    algo.mock()
 
     
 if __name__ == "__main__":
