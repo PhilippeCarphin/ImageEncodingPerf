@@ -6,6 +6,14 @@
     
 ** Question 1 : Hypothèses
    
+*** Prédictif
+   1. Taux de compression inférieur pour l'encodage prédictif 
+   2. Performance de l'encodage prédictif dépend grandement de la prédiction
+   3. La prédiction à utiliser dépend du type d'entrée
+*** Pairs d'octets
+   1. meilleur pour texte que pour image
+     
+      
 
 ** Question 2 : Expériences
    
