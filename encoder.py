@@ -50,19 +50,19 @@ def parse(op):
         op["output"] = args.output
 
 
-def run():
+def run(op):
     try:
-        img = Image.open(input_file)
+        img = Image.open(op['input'])
     except Exception as e:
         print(e)
         sys.exit(1)
 
-    arr = np.array(img)
-    print(arr)
+    if op['algo'] == 'pairs':
+        pass
+        # import algo.pairs as pairs
 
     
 if __name__ == "__main__":
-    definition()
-    parse()
-    if input_file and output_file and algo:
-        run()
+    parse(op)
+    if op["input"] and op["output"] and op["algo"]:
+        run(op)
