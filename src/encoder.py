@@ -2,6 +2,7 @@
 import sys
 import argparse
 import importlib
+from algo.bytepair import *
 
 from PIL import Image
 import numpy as np
@@ -61,6 +62,11 @@ def parse(op):
 
 
 def run(op):
+
+    if op["algo"] == "pairs":
+        test_byte_pair()
+        return
+
     try:
         img = Image.open(op['input'])
     except Exception as e:
@@ -72,7 +78,7 @@ def run(op):
     algo = importlib.import_module('algo.' + op['algo'])
     algo.mock()
 
-    
+
 if __name__ == "__main__":
     parse(op)
     if op["input"] and op["output"] and op["algo"]:
