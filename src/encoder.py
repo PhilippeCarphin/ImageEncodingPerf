@@ -60,12 +60,17 @@ def parse(op):
     if args.output:
         op["output"] = args.output
 
+def run_byte_pair(op):
+    with open(op["input"]) as f:
+        message = f.read()
+        print(byte_pair_encode(message))
+    return
+
 
 def run(op):
 
     if op["algo"] == "pairs":
-        test_byte_pair()
-        return
+        return run_byte_pair(op)
 
     try:
         img = Image.open(op['input'])
