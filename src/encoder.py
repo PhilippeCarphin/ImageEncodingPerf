@@ -67,12 +67,20 @@ def run(op):
         print(e)
         sys.exit(1)
 
-    # MOCK
-    op['algo'] = 'mock'
-    algo = importlib.import_module('algo.' + op['algo'])
-    algo.mock()
+    # import pdb; pdb.set_trace()
+    try:
+        # op['algo'] = 'mock'
+        module_name = 'algo.' + op['algo']
+        print(op)
+        algo = importlib.import_module(module_name)
+    except Exception as e:
+        print("ERROR -- Couldn't execute algorithm:")
+        print(e)
+        sys.exit(1)
 
-    
+    algo.run(op)
+
+
 if __name__ == "__main__":
     parse(op)
     if op["input"] and op["output"] and op["algo"]:
