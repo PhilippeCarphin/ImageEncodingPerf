@@ -1,5 +1,5 @@
 """
-Image encoding using the predictive algorythm
+Image encoding using the predictive algorithm
 
 inspired by:
 
