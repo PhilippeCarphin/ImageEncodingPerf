@@ -11,10 +11,7 @@ import matplotlib.pyplot as py
 
 
 def run(op):
-    print('runnign')
-    # import pdb; pdb.set_trace()
     filename = op['input']
-    # subprocess.call(['sxiv', filename])
     predictive(op)
 
 
@@ -29,4 +26,6 @@ def predictive(op):
     image=rgb2gray(image)
     imageout=image.astype('uint8')
     py.imshow(imageout,cmap = py.get_cmap('gray'))
-    py.show()
+
+    if 'show' in op.keys():
+        py.show()

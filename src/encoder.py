@@ -2,6 +2,7 @@
 import sys
 import argparse
 import importlib
+import algo.predictive
 from algo.bytepair import *
 
 from PIL import Image
@@ -38,12 +39,19 @@ def parse(op):
                         dest='decode',
                         help="",)
 
+    parser.add_argument("-s", "--show",
+                        action="store_true",
+                        help="open resulting file",)
+
     # incompatible with pairs
     parser.add_argument("-p", "--prediction-formula",
                         dest='prediction_formula',
                         help="",)
 
     args = parser.parse_args()
+
+    if args.show:
+        op['show'] = True
 
     if not args.algo in AVAILABLE_ALGOS:
         print(
@@ -55,7 +63,6 @@ def parse(op):
     else:
         op["algo"] = args.algo
 
-    # import pdb; pdb.set_trace()
     op["input"] = args.input
     if args.output:
         op["output"] = args.output
@@ -67,10 +74,9 @@ def run_byte_pair(op):
     return
 
 
-def run(op):
-
-    if op["algo"] == "pairs":
-        return run_byte_pair(op)
+def run_predictive(op):
+    """ Open file and call algorithm
+    """
 
     try:
         img = Image.open(op['input'])
@@ -78,18 +84,14 @@ def run(op):
         print(e)
         sys.exit(1)
 
-    # import pdb; pdb.set_trace()
-    try:
-        # op['algo'] = 'mock'
-        module_name = 'algo.' + op['algo']
-        print(op)
-        algo = importlib.import_module(module_name)
-    except Exception as e:
-        print("ERROR -- Couldn't execute algorithm:")
-        print(e)
-        sys.exit(1)
+    algo.predictive.run(op)
 
-    algo.run(op)
+
+def run(op):
+    if op["algo"] == "pairs":
+        return run_byte_pair(op)
+    elif op["algo"] == "predictive":
+        return run_predictive(op)
 
 
 if __name__ == "__main__":
