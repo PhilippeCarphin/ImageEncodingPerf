@@ -67,14 +67,14 @@ def parse(op):
     if args.output:
         op["output"] = args.output
 
-def run_byte_pair(op):
+def run_byte_pair(op) -> None:
     with open(op["input"]) as f:
         message = f.read()
         print(byte_pair_encode(message))
     return
 
 
-def run_predictive(op):
+def run_predictive(op) -> None:
     """ Open file and call algorithm
     """
 
@@ -87,14 +87,10 @@ def run_predictive(op):
     algo.predictive.run(op)
 
 
-def run(op):
-    if op["algo"] == "pairs":
-        return run_byte_pair(op)
-    elif op["algo"] == "predictive":
-        return run_predictive(op)
-
-
 if __name__ == "__main__":
     parse(op)
     if op["input"] and op["output"] and op["algo"]:
-        run(op)
+        if op["algo"] == "pairs":
+            run_byte_pair(op)
+        elif op["algo"] == "predictive":
+            run_predictive(op)
