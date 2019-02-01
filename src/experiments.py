@@ -3,6 +3,7 @@ Set of experiments
 
 """
 
+import os
 import subprocess
 
 from utils import get_compression_factor
@@ -16,19 +17,22 @@ class AbstractExperiment:
         self.pred        = kwargs.get('pred', None)
 
     def run(self):
-        cmd = '''
-              ./encoder.py --input  {input} \
-                           --output {output}\
-                           --algo   {algo}
-        '''.format(input= self.input_file,
-                   output=self.output_file,
-                   algo=  self.algo,
-        )
-        subprocess.call(cmd.split())
+        self.initialize()
+        cmd = f"./encoder.py --input  {self.input_file} " +\
+                           f"--output {self.output_file} "+\
+                           f"--algo   {self.algo} "       +\
+                           f"--pred   {self.pred} "
 
+        # print(cmd)
+        FNULL = open(os.devnull, 'w')
+        subprocess.call(cmd.split(),
+                        stdout=FNULL,
+                        stderr=subprocess.STDOUT)
         self.mesure()
         self.report()
 
+    def initialize(self):
+        pass
 
     def mesure(self):
         raise NotImplementedError()
@@ -43,6 +47,32 @@ class ExpPredictive_1(AbstractExperiment):
     simple image, without additionnal encoding
     """
 
+    def initialize(self):
+        self.algo = "predictive"
+
+    def mesure(self):
+        self.factor = get_compression_factor(
+            before=self.input_file,
+            after= self.output_file)
+
+    def report(self):
+        print(
+            "Experiment" +\
+            self.__doc__ +\
+            f"using {self.algo} algorithm\n\n" +\
+            f"    compression factor = {self.factor}\n")
+
+class ExpPredictive_2(AbstractExperiment):
+    """
+    Mesure compression ratio of the predictive algorithm on a
+    simple image, without additionnal encoding,
+    with a bad prediction matrix
+    """
+
+    def initialize(self):
+        self.algo='predictive'
+        self.pred='bad'
+
     def mesure(self):
         self.factor = get_compression_factor(
             before=self.input_file,
@@ -56,11 +86,32 @@ class ExpPredictive_1(AbstractExperiment):
             f"    compression factor = {self.factor}\n")
 
 
-def run_experiments():
-    exp1 = ExpPredictive_1(
-        algo='predictive'
-    )
-    exp1.run()
+class ExpBytes_1(AbstractExperiment):
+    """
+    Mesure compression ratio of the byte algorithm on a
+    simple image, without additionnal encoding,
+    """
 
+    def initialize(self):
+        self.algo='pairs'
+
+    def mesure(self):
+        self.factor = get_compression_factor(
+            before=self.input_file,
+            after= self.output_file)
+
+
+    def report(self):
+        print(
+            "Experiment" +\
+            self.__doc__ +\
+            f"using {self.algo} algorithm\n\n" +\
+            f"    compression factor = {self.factor}\n")
+
+
+def run_experiments():
+    ExpPredictive_1().run()
+    ExpPredictive_2().run()
+    ExpBytes_1().run()
 
 run_experiments()

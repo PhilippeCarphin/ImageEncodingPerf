@@ -10,16 +10,22 @@ import matplotlib.pyplot as py
 from PIL import Image
 
 
-matpred = [[0.33,0.33],
-           [0.33,0.0]]
+matpred_normal = [[0.33,0.33],
+                  [0.33,0.0]]
 
+matpred_bad    = [[0.0,0.0],
+                  [0.0,0.0]]
 def run(op):
+    if op.get('pred') == 'bad':
+        matpred = matpred_bad
+    else:
+        matpred = matpred_normal
     input_f  = op['input']
     output_f = op['output']
 
     image = prepare_image(op)
     image = prepare_for_predictive(image)
-    image = exec_prediction(image)
+    image = exec_prediction(image, matpred)
 
     im = Image.fromarray(image)
     im = im.convert("L")
@@ -66,7 +72,7 @@ def prepare_for_predictive(image):
     return image
 
 
-def exec_prediction(image):
+def exec_prediction(image, matpred):
     erreur = np.zeros((len(image)-2,len(image[0])-2))
     imagepred = np.zeros((len(image)-2,len(image[0])-2))
     for i in range(1,len(image)-2):

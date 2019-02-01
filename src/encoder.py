@@ -44,7 +44,7 @@ def parse(op):
                         action="store_true",
                         help="open resulting file",)
 
-    # incompatible with pairs
+    # FIXME: make incompatible with pairs
     parser.add_argument("-p", "--prediction-formula",
                         dest='prediction_formula',
                         help="",)
@@ -65,6 +65,10 @@ def parse(op):
         op["algo"] = args.algo
 
     op["input"] = args.input
+
+    if args.prediction_formula:
+        op["pred"]  = args.prediction_formula
+
     if args.output:
         op["output"] = args.output
 
