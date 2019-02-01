@@ -1,6 +1,11 @@
 
+
 import numpy as np
 import regex as re
+
+def byte_pair_encode_2(message):
+    int
+    
 
 def byte_pair_encode(message):
     """
@@ -39,7 +44,17 @@ def byte_pair_encode(message):
         for i in range(0,len(message)-1):
             temppaire = message[i]+message[i+1]
             if not list(filter(lambda x: x[0] == temppaire, paires)): #Si la liste retournée par filter est vide.
-                paires += [[temppaire,len(re.findall(temppaire, message, overlapped = True))]]
+                try:
+                    if '[' in temppaire:
+                        continue
+                    result = re.findall(temppaire, message, overlapped = True)
+                except Exception as e:
+                    print(message)
+                    print("temppaire = {}".format(temppaire))
+                    print("paires = {}".format(paires))
+                    raise e
+
+                paires += [[temppaire,len(result)]]
 
         #Trouve la paire avec le plus de répétitions.
         paires = sorted(paires, key=lambda x: x[1], reverse = True)

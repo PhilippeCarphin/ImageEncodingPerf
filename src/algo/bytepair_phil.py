@@ -143,5 +143,15 @@ if __name__ == "__main__":
     #test_replace_pair()
     # print(do_first_pass(test_string))
 
+    with open("../../res/lipsum.txt") as f:
+        string = f.read()
+        print(string)
+
+    cmo = byte_pair_encode(string)
+    print(''.join(map(chr, cmo["bytes"])))
+    decoded = byte_pair_decode(cmo)
+    decoded_string = ''.join(list(map(chr, decoded)))
+    print(decoded_string)
+
 
 
