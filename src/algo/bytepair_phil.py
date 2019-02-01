@@ -1,18 +1,24 @@
 ################################################################################
 # INTERFACE:
-# byte_pair_encode(str)
-# byte_pair_decode(coded_message_object)
-# byte_pair_encode_file(filepath)
+# bytepair_encode(str)
+# bytepair_decode(coded_message_object)
+# bytepair_encode_file(filepath)
 ################################################################################
 
 
-def byte_pair_encode_file(filepath):
+def bytepair_encode_file(filepath):
     with open("../../res/lipsum.txt") as f:
         string = f.read()
-    return byte_pair_encode(string)
+    return bytepair_encode(string)
+
+def bytepair_compression_rate(input_string):
+    cmo = bytepair_encode(input_string)
+    coded_length = len( cmo["bytes"] )
+    input_length = len(input_string)
+    return coded_length / float(input_length)
 
 
-def byte_pair_encode(input_string):
+def bytepair_encode(input_string):
     current_object = { "bytes":list(map(ord, input_string)), "replacements":[]}
 
     while True:
@@ -32,9 +38,8 @@ def byte_pair_encode(input_string):
 
 def bytepair_encoded_msg_as_str(coded_message_object):
     return ''.join(map(chr,coded_message_object["bytes"]))
-    
 
-def byte_pair_decode(coded_message_object):
+def bytepair_decode(coded_message_object):
     bytes = coded_message_object["bytes"]
     repls = coded_message_object["replacements"]
     for rep in reversed(coded_message_object["replacements"]):
@@ -44,7 +49,7 @@ def byte_pair_decode(coded_message_object):
 
 
 def un_replace_pair(bytes, replacement):
-    output = [] 
+    output = []
     length = len(bytes)
     i = 0
     while i < length:
@@ -59,7 +64,7 @@ def un_replace_pair(bytes, replacement):
             i += 1
     return output
 
-def test_byte_pair_encode():
+def test_bytepair_encode():
     with open("./small_text.txt") as input_file:
         file_content = input_file.read()
         print(file_content)
@@ -139,14 +144,14 @@ if __name__ == "__main__":
     test_string = "ASDASDASKSA:DSKDASDFHFDLJLSGDNCMS<DVB:JK:J"
     # print(test_string)
 
-    cmo = byte_pair_encode(test_string)
-    decoded = byte_pair_decode(cmo)
+    cmo = bytepair_encode(test_string)
+    decoded = bytepair_decode(cmo)
     print(decoded)
 
     print(test_string == decoded)
     # print(test_string)
     # test_get_most_frequent_pair()
-    # test_byte_pair_encode():
+    # test_bytepair_encode():
     # test_get_pair_frequencies():
     # test_get_byte_set():
     # test_get_most_frequent_pair():
@@ -158,9 +163,9 @@ if __name__ == "__main__":
         string = f.read()
         print(string)
 
-    cmo = byte_pair_encode(string)
+    cmo = bytepair_encode(string)
     print(''.join(map(chr, cmo["bytes"])))
-    decoded = byte_pair_decode(cmo)
+    decoded = bytepair_decode(cmo)
     print(decoded)
 
 
