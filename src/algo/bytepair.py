@@ -1,107 +1,228 @@
-
-
+################################################################################
+# INTERFACE:
+# bytepair_encode(str)
+# bytepair_decode(coded_message_object)
+# bytepair_encode_file(filepath)
+################################################################################
+import matplotlib.pyplot as py
 import numpy as np
-import regex as re
 
-def byte_pair_encode_2(message):
-    int
-    
+def bytepair_encode_image(filepath):
 
-def byte_pair_encode(message):
-    """
-    Encode a message using byte-pair encoding
+    message_object = { "bytes": bytepair_image_to_bytes(filepath), "replacements":list()}
 
-    message (str) : The message to encode
+def bytepair_image_to_bytes(image):
+    return 
 
-    returns a dictionary containing the encoded message and a list of the substitutions that were made
+def rgb2gray(rgb):
+    return np.dot(rgb[:,:], [0.299, 0.587, 0.114])
 
-        {
-            "coded_message": message,
-            "dict_symb": dict_symb
-        }
-    """
+def bytepair_load_image(filepath):
 
-    LUToctetsdispo = [True] * 256
-    dict_symb =[message[0]]
-    LUToctetsdispo[ord(message[0])] = False
-    nbsymboles = 1
-    for i in range(1,len(message)):
-        if message[i] not in dict_symb:
-            dict_symb += [message[i]]
-            LUToctetsdispo[ord(message[i])] = False  #Octet utilisé
-            nbsymboles += 1
+    imagelue = py.imread(filepath)
+    image=imagelue.astype('float')
+    image=rgb2gray(image)
+    imageout=image.astype('uint8').tolist()
+    single_list = []
+    for l in imageout:
+        single_list += l
 
-    longueurOriginale = np.ceil(np.log2(nbsymboles))*len(message)
+    return single_list
+
+def test_image_to_int_list():
+    image = bytepair_load_image("../../res/cats_are_evil.jpeg")
+    print(image[0:10])
+    print(len(image))
 
 
-    dict_symb = []  #Dictionnaire des substitutions
-    debut = ord(message[0])  # Origine trouver un code de substitution. Et pour avoir des caractères imprimables...
 
-    remplacementpossible = True
-    while remplacementpossible == True:
-        #Recherche des paires
-        paires = []
-        for i in range(0,len(message)-1):
-            temppaire = message[i]+message[i+1]
-            if not list(filter(lambda x: x[0] == temppaire, paires)): #Si la liste retournée par filter est vide.
-                try:
-                    if '[' in temppaire:
-                        continue
-                    result = re.findall(temppaire, message, overlapped = True)
-                except Exception as e:
-                    print(message)
-                    print("temppaire = {}".format(temppaire))
-                    print("paires = {}".format(paires))
-                    raise e
 
-                paires += [[temppaire,len(result)]]
+def bytepair_encode_file(filepath):
+    with open("../../res/lipsum.txt") as f:
+        string = f.read()
+    return bytepair_encode(string)
 
-        #Trouve la paire avec le plus de répétitions.
-        paires = sorted(paires, key=lambda x: x[1], reverse = True)
-
-        if paires[0][1] > 1:
-            #Remplace la paire
-            # print(paires)
-            # print("La paire ",paires[0][0], " est la plus fréquente avec ",paires[0][1], "répétitions")
-            #Cherche un octet non utilisé
-            while debut <256 and LUToctetsdispo[debut] == False:
-                debut += 1
-            if debut < 256:
-                #On substitut
-                message = message.replace(paires[0][0], chr(debut))
-                LUToctetsdispo[debut] = False
-                dict_symb += [[paires[0][0], chr(debut)]]
-            else:
-                print("Il n'y a plus d'octets disponible!") #Bien sûr, ce n'est pas exact car la recherche commence à message[0]
-
-            # print(message)
-            # print(dict_symb)
-        else:
-            remplacementpossible = False
-
-    # print("Longueur = {0}".format(np.ceil(np.log2(nbsymboles))*len(message)))
-    # print("Longueur originale = {0}".format(longueurOriginale))
-    # print(dictsymb)
-    return {"coded_message": message, "dict_symb": dict_symb}
-
-def byte_pair_decode(coded_message, dict_symb):
-    """ Decode a message encoded by byte-pair algorithm """
-    for subst in reversed(dict_symb):
-        coded_message = coded_message.replace(subst[1], subst[0])
-
-    return coded_message
-
-def test_byte_pair():
-    Message = "ABAABAABACABBABCDAADACABABAAABAABBABABAABAAB"
-    result = byte_pair_encode(Message)
-    decoded_message = byte_pair_decode(result["coded_message"], result["dict_symb"])
-
-    if decoded_message == Message:
-        print("TEST PASSED : decoded message is the same as initial message")
+def bytepair_compression_rate_file(filepath):
+    if filepath.endswith(".jpeg"):
+        return bytepair_compression_rate_img(filepath)
     else:
-        print("TEST FAILED : decoded message does not match initial message: \n    in : {}\n   out : {}"
-              .format(Message, decoded_message))
+        return bytepair_compression_rate_txt(filepath)
 
+def bytepair_compression_rate_txt(filepath):
+    with open(filepath) as f:
+        message = f.read()
+        return bytepair_compression_rate_str(message)
+
+def bytepair_compression_rate_img(filepath):
+    img_int_list = bytepair_load_image(filepath)
+    initial_size = len(img_int_list)
+    cmo = {"bytes":img_int_list, "replacements":[]}
+    cmo = bytepair_encode_internal(cmo)
+    compressed_size = len(cmo["bytes"])
+    return compressed_size / float(initial_size)
+
+def bytepair_compression_rate_str(input_string):
+    cmo = bytepair_encode_string(input_string)
+    coded_length = len( cmo["bytes"] )
+    input_length = len(input_string)
+    return coded_length / float(input_length)
+
+
+def bytepair_encode_string(input_string):
+
+    message_object = { "bytes":list(map(ord, input_string)), "replacements":[]}
+
+    return bytepair_encode_internal(message_object)
+
+def bytepair_encode_internal(message_object):
+
+    current_object = message_object
+
+    while True:
+        pair = get_most_frequent_pair(current_object["bytes"])
+        if pair[1] == 1:
+            break
+        unused_chars = get_unused_chars(current_object["bytes"])
+        if not unused_chars:
+            break
+        replacement_char = unused_chars.pop()
+
+        next_message = replace_pair(current_object["bytes"], pair[0], replacement_char)
+        new_replacements = current_object["replacements"] + [(pair[0], replacement_char)]
+        current_object = { "bytes": next_message, "replacements":new_replacements}
+
+    return { "bytes": next_message, "replacements":new_replacements}
+
+def bytepair_encoded_msg_as_str(coded_message_object):
+    return ''.join(map(chr,coded_message_object["bytes"]))
+
+def bytepair_decode_string(coded_message_object):
+    bytes = coded_message_object["bytes"]
+    repls = coded_message_object["replacements"]
+    for rep in reversed(coded_message_object["replacements"]):
+        bytes = un_replace_pair(bytes, rep)
+
+    return ''.join(map(chr, bytes))
+
+
+def un_replace_pair(bytes, replacement):
+    output = []
+    length = len(bytes)
+    i = 0
+    while i < length:
+        c = bytes[i]
+        p = tuple(bytes[i:i+2])
+
+        if c == replacement[1]:
+            output += list(replacement[0])
+            i += 1
+        else:
+            output.append(c)
+            i += 1
+    return output
+
+def test_bytepair_encode():
+    with open("./small_text.txt") as input_file:
+        file_content = input_file.read()
+        print(file_content)
+        print(type(file_content))
+
+def get_pair_frequencies(string):
+    pair_frequencies = {}
+    for i in range(len(string) - 2):
+
+        pair = tuple(string[i:i+2])
+
+        if pair in pair_frequencies:
+            pair_frequencies[pair] += 1
+        else:
+            pair_frequencies[pair] = 1
+
+    return pair_frequencies
+
+def test_get_pair_frequencies():
+    pair_frequencies = get_pair_frequencies(test_string)
+    print(pair_frequencies)
+
+
+def get_most_frequent_pair(string):
+    pair_frequencies = get_pair_frequencies(string)
+
+    max_freq = 0
+    most_frequent = None
+
+    for p in pair_frequencies:
+        freq = pair_frequencies[p]
+        if freq > max_freq:
+            most_frequent = p
+            max_freq = freq
+    return (most_frequent, max_freq)
+
+def test_get_most_frequent_pair():
+    mfp = get_most_frequent_pair(test_string)
+    print(get_pair_frequencies(test_string))
+    print("most frequent pair " + str(mfp))
+
+def do_first_pass(string):
+    pair = get_most_frequent_pair(string)
+    replacement_char = get_unused_chars(string).pop()
+    return (replace_pair(string, pair, replacement_char), [(pair, replacement_char)])
+
+def get_unused_chars(string):
+    possible_chars = set(range(256))
+    used_chars = set(string)
+    return possible_chars - used_chars
+
+def test_get_unused_chars():
+    print(get_unused_chars([81,83,82]))
+
+def replace_pair(string, pair, replacement):
+    output = [] 
+    length = len(string)
+    i = 0
+    while i < length:
+        c = string[i]
+        p = tuple(string[i:i+2])
+
+        # print("replacement : ".format(replacement))
+        if p == pair:
+            output.append(replacement)
+            i += 2
+        else:
+            output.append(c)
+            i += 1
+    return output
+
+def test_replace_pair():
+    print(test_string)
+    print(replace_pair(test_string, (65,83), 8))
+
+def test_bytepair_encode_decode():
+    with open("../../res/lipsum.txt") as f:
+        string = f.read()
+        print(string)
+
+    cmo = bytepair_encode(string)
+    print(''.join(map(chr, cmo["bytes"])))
+    decoded = bytepair_decode(cmo)
+    print(decoded)
 
 if __name__ == "__main__":
-    test_byte_pair()
+    test_string = "ASDASDASKSA:DSKDASDFHFDLJLSGDNCMS<DVB:JK:J"
+    # print(test_string)
+
+    # print(test_string)
+    # test_get_most_frequent_pair()
+    # test_bytepair_encode():
+    # test_get_pair_frequencies():
+    # test_get_byte_set():
+    # test_get_most_frequent_pair():
+    #test_get_unused_chars()
+    #test_replace_pair()
+    # print(do_first_pass(test_string))
+    # test_bytepair_encode_decode()
+    test_image_to_int_list()
+
+
+
+
