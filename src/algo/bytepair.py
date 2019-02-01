@@ -6,13 +6,35 @@
 ################################################################################
 import matplotlib.pyplot as py
 import numpy as np
+from collections import OrderedDict
+
+def bytepair_get_results(filepath):
+    initial_message_obj = bytepair_file_to_message_object(filepath)
+    encoded_message_obj = bytepair_encode_internal(initial_message_obj)
+
+    initial_size = len(initial_message_obj["bytes"])
+    compressed_size = len(encoded_message_obj["bytes"])
+
+    compression_rate = 1 - (compressed_size / float(initial_size))
+    nb_replacements = len(encoded_message_obj["replacements"])
+    stop_reason = encoded_message_obj["stop_reason"]
+
+    return OrderedDict({"filename": filepath, "in_size": initial_size, "out_size": compressed_size, "compression_rate": compression_rate, "nb_replacements":nb_replacements, "stop_reason": stop_reason})
+
+
+def bytepair_file_to_message_object(filepath):
+    bytes_list = None
+    if filepath.endswith(".jpeg") or filepath.endswith("raw"):
+        bytes_list = bytepair_load_image(filepath)
+    else:
+        with open(filepath) as f:
+            message = f.read()
+            bytes_list = list(map(ord, message))
+    return {"bytes": bytes_list, "replacements":[]}
 
 def bytepair_encode_image(filepath):
 
     message_object = { "bytes": bytepair_image_to_bytes(filepath), "replacements":list()}
-
-def bytepair_image_to_bytes(image):
-    return 
 
 def rgb2gray(rgb):
     return np.dot(rgb[:,:], [0.299, 0.587, 0.114])
@@ -78,12 +100,15 @@ def bytepair_encode_internal(message_object):
 
     current_object = message_object
 
+    stop_reason = "None"
     while True:
         pair = get_most_frequent_pair(current_object["bytes"])
         if pair[1] == 1:
+            stop_reason = "pairs"
             break
         unused_chars = get_unused_chars(current_object["bytes"])
         if not unused_chars:
+            stop_reason = "unused_bytes"
             break
         replacement_char = unused_chars.pop()
 
@@ -91,7 +116,7 @@ def bytepair_encode_internal(message_object):
         new_replacements = current_object["replacements"] + [(pair[0], replacement_char)]
         current_object = { "bytes": next_message, "replacements":new_replacements}
 
-    return { "bytes": next_message, "replacements":new_replacements}
+    return { "bytes": next_message, "replacements":new_replacements, "stop_reason":stop_reason}
 
 def bytepair_encoded_msg_as_str(coded_message_object):
     return ''.join(map(chr,coded_message_object["bytes"]))

@@ -4,6 +4,7 @@ import argparse
 import importlib
 import algo.predictive
 import algo.bytepair as bp
+import json
 
 from PIL import Image
 import numpy as np
@@ -68,7 +69,7 @@ def parse(op):
         op["output"] = args.output
 
 def run_bytepair(op) -> None:
-    print(bp.bytepair_compression_rate_file(op["input"]))
+    print(json.dumps(bp.bytepair_get_results(op["input"]), sort_keys=True) + ",")
 
 
 def run_predictive(op) -> None:
