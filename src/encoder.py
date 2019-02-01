@@ -11,7 +11,7 @@ import numpy as np
 
 
 AVAILABLE_ALGOS = ["predictive", "pairs"]
-DEFAULT_OUTPUT_NAME = "output.bin"
+DEFAULT_OUTPUT_NAME = "output.jpg"
 
 op = {
     "input" : None,
