@@ -72,6 +72,7 @@ def run_bytepair(op) -> None:
         message = f.read()
         cmo = bp.bytepair_encode(message)
         decoded = bp.bytepair_decode(cmo)
+        print(bp.bytepair_compression_rate(message))
 
 
 def run_predictive(op) -> None:
