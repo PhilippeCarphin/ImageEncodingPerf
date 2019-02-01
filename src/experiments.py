@@ -4,7 +4,10 @@ Set of experiments
 """
 
 import os
+import sys
 import subprocess
+from subprocess import PIPE, Popen
+import json
 
 from utils import get_compression_factor
 
@@ -25,9 +28,15 @@ class AbstractExperiment:
 
         # print(cmd)
         FNULL = open(os.devnull, 'w')
-        subprocess.call(cmd.split(),
-                        stdout=FNULL,
-                        stderr=subprocess.STDOUT)
+        os.chdir(sys.path[0])
+        # subprocess.call(cmd.split(),
+        #                 stdout=FNULL,
+        #                 stderr=subprocess.STDOUT)
+        p = Popen(cmd.split(),
+                  stdin=PIPE,
+                  stdout=PIPE,
+                  stderr=PIPE)
+        self.res, _ = p.communicate()
         self.mesure()
         self.report()
 
@@ -102,11 +111,13 @@ class ExpBytes_1(AbstractExperiment):
 
 
     def report(self):
+        j = json.loads(self.res)
+        factor = str(j['compression_rate'])
         print(
             "Experiment" +\
             self.__doc__ +\
             f"using {self.algo} algorithm\n\n" +\
-            f"    compression factor = {self.factor}\n")
+            f"    compression factor = {factor}\n")
 
 
 def run_experiments():

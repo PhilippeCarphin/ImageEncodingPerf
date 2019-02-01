@@ -73,7 +73,7 @@ def parse(op):
         op["output"] = args.output
 
 def run_bytepair(op) -> None:
-    print(json.dumps(bp.bytepair_get_results(op["input"]), sort_keys=True) + ",")
+    print(json.dumps(bp.bytepair_get_results(op["input"]), sort_keys=True))
 
 
 def run_predictive(op) -> None:
