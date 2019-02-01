@@ -3,7 +3,7 @@ import sys
 import argparse
 import importlib
 import algo.predictive
-from algo.bytepair import *
+import algo.bytepair_phil as bp
 
 from PIL import Image
 import numpy as np
@@ -67,11 +67,12 @@ def parse(op):
     if args.output:
         op["output"] = args.output
 
-def run_byte_pair(op) -> None:
+def run_bytepair(op) -> None:
     with open(op["input"]) as f:
         message = f.read()
-        print(byte_pair_encode(message))
-    return
+        cmo = bp.bytepair_encode(message)
+        decoded = bp.bytepair_decode(cmo)
+        print(bp.bytepair_compression_rate(message))
 
 
 def run_predictive(op) -> None:
@@ -91,6 +92,6 @@ if __name__ == "__main__":
     parse(op)
     if op["input"] and op["output"] and op["algo"]:
         if op["algo"] == "pairs":
-            run_byte_pair(op)
+            run_bytepair(op)
         elif op["algo"] == "predictive":
             run_predictive(op)
