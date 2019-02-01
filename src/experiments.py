@@ -47,7 +47,9 @@ class ExpPredictive_1(AbstractExperiment):
             after= self.output_file)
 
     def report(self):
-        print("compression factor = {}".format(self.factor))
+        print(
+           f"Experiment with {self.algo} algorithm\n"
+           f"compression factor = {self.factor}\n")
 
 
 def run_experiments():
