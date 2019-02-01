@@ -1,3 +1,16 @@
+################################################################################
+# INTERFACE:
+# byte_pair_encode(str)
+# byte_pair_decode(coded_message_object)
+# byte_pair_encode_file(filepath)
+################################################################################
+
+
+def byte_pair_encode_file(filepath):
+    with open("../../res/lipsum.txt") as f:
+        string = f.read()
+    return byte_pair_encode(string)
+
 
 def byte_pair_encode(input_string):
     current_object = { "bytes":list(map(ord, input_string)), "replacements":[]}
@@ -17,7 +30,9 @@ def byte_pair_encode(input_string):
 
     return { "bytes": next_message, "replacements":new_replacements}
 
-
+def bytepair_encoded_msg_as_str(coded_message_object):
+    return ''.join(map(chr,coded_message_object["bytes"]))
+    
 
 def byte_pair_decode(coded_message_object):
     bytes = coded_message_object["bytes"]
@@ -25,7 +40,7 @@ def byte_pair_decode(coded_message_object):
     for rep in reversed(coded_message_object["replacements"]):
         bytes = un_replace_pair(bytes, rep)
 
-    return bytes
+    return ''.join(map(chr, bytes))
 
 
 def un_replace_pair(bytes, replacement):
@@ -43,8 +58,6 @@ def un_replace_pair(bytes, replacement):
             output.append(c)
             i += 1
     return output
-
-
 
 def test_byte_pair_encode():
     with open("./small_text.txt") as input_file:
@@ -129,10 +142,8 @@ if __name__ == "__main__":
     cmo = byte_pair_encode(test_string)
     decoded = byte_pair_decode(cmo)
     print(decoded)
-    decoded_string = ''.join(list(map(chr, decoded)))
-    print(decoded_string)
 
-    print(test_string == decoded_string)
+    print(test_string == decoded)
     # print(test_string)
     # test_get_most_frequent_pair()
     # test_byte_pair_encode():
@@ -150,8 +161,8 @@ if __name__ == "__main__":
     cmo = byte_pair_encode(string)
     print(''.join(map(chr, cmo["bytes"])))
     decoded = byte_pair_decode(cmo)
-    decoded_string = ''.join(list(map(chr, decoded)))
-    print(decoded_string)
+    print(decoded)
+
 
 
 
