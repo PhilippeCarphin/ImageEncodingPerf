@@ -1,4 +1,4 @@
-[
+{ "reuslts":[
 {"compression_rate": 0.5140324963072378, "filename": "res/Notes_2018-10-31.org", "in_size": 677, "nb_replacements": 90, "out_size": 329, "stop_reason": "pairs"},
 {"compression_rate": 0.5383326890864579, "filename": "res/Notes_AlexPowerbag.org", "in_size": 7761, "nb_replacements": 183, "out_size": 3583, "stop_reason": "unused_bytes"},
 {"compression_rate": 0.5761561946402322, "filename": "res/Notes_GTD.html", "in_size": 26531, "nb_replacements": 177, "out_size": 11245, "stop_reason": "unused_bytes"},
@@ -56,4 +56,4 @@
 {"compression_rate": 0.036111111111111094, "filename": "res/simple.raw", "in_size": 360, "nb_replacements": 6, "out_size": 347, "stop_reason": "pairs"},
 {"compression_rate": 0.6663647784042771, "filename": "res/wmd.html", "in_size": 34229, "nb_replacements": 193, "out_size": 11420, "stop_reason": "unused_bytes"},
 {"compression_rate": 0.6592178770949721, "filename": "res/wmd.org", "in_size": 1790, "nb_replacements": 231, "out_size": 610, "stop_reason": "pairs"},
-]
+]}
