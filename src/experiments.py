@@ -38,9 +38,11 @@ class AbstractExperiment:
 
 
 class ExpPredictive_1(AbstractExperiment):
-    """Mesure compression ratio of the predictive algorithm on a
+    """
+    Mesure compression ratio of the predictive algorithm on a
     simple image, without additionnal encoding
     """
+
     def mesure(self):
         self.factor = get_compression_factor(
             before=self.input_file,
@@ -48,8 +50,10 @@ class ExpPredictive_1(AbstractExperiment):
 
     def report(self):
         print(
-           f"Experiment with {self.algo} algorithm\n"
-           f"compression factor = {self.factor}\n")
+            "Experiment" +\
+            self.__doc__ +\
+            f"using {self.algo} algorithm\n\n" +\
+            f"    compression factor = {self.factor}\n")
 
 
 def run_experiments():
