@@ -227,9 +227,9 @@ def test_bytepair_encode_decode():
         string = f.read()
         print(string)
 
-    cmo = bytepair_encode(string)
+    cmo = bytepair_encode_string(string)
     print(''.join(map(chr, cmo["bytes"])))
-    decoded = bytepair_decode(cmo)
+    decoded = bytepair_decode_string(cmo)
     print(decoded)
 
 if __name__ == "__main__":
@@ -245,8 +245,8 @@ if __name__ == "__main__":
     #test_get_unused_chars()
     #test_replace_pair()
     # print(do_first_pass(test_string))
-    # test_bytepair_encode_decode()
-    test_image_to_int_list()
+    test_bytepair_encode_decode()
+    # test_image_to_int_list()
 
 
 
