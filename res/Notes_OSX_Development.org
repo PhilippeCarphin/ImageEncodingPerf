@@ -1,0 +1,13 @@
+#+TITLE: OSX Development
+
+* OSX Development
+
+** Notes from the tutorial
+
+Getting started
+
+Open XCode, File -> New Project
+
+Select Cocoa Application
+Language Swift
+Check Use storyboards, I don't know why yet

@@ -1,0 +1,9 @@
+* Tasks
+** GTD-IN Pay credit card 
+   :PROPERTIES:
+   :ID:       37FECACE-794E-4B38-93FB-2B71DA5D56BF
+   :END:
+** GTD-IN Ask Mom for money transfer
+   :PROPERTIES:
+   :ID:       37034061-2C2E-470A-BC13-46247C3F20C8
+   :END:

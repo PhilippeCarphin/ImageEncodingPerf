@@ -1,0 +1,16 @@
+#+TITLE: Query Progress Callbacks
+
+#+BEGIN_SRC c
+void sqlite3_progress_handler(sqlite3 *db, int instructions_per_call, int (*callback)(void*), void *callback_params)
+#+END_SRC
+
+#+BEGIN_SRC c
+int query_progress_callback(void *params)
+{
+    static int calls;
+    calls += 1;
+    printf("There has been %d virtual machine instructions\n", calls * INSTRUCTIONS_PER_CALL);
+    return 0;
+}
+#+END_SRC
+

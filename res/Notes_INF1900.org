@@ -1,0 +1,42 @@
+#+TITLE: 2018-12-04
+
+* 2018-12-04 Notes sur l'épreuve finale
+
+- Malgré cela, afin que l'évaluation de tous puisse se faire dans un délai
+  raisonnable, votre robot devra passer l’épreuve en *moins de 8 minutes*.
+
+- En cas d'erreur pendant l'exécution, une seule reprise sera autorisée.
+
+** Déroulement
+
+- Le robot commence avant sur M1.
+- Le robot affiche son nom sur l'écran LCD
+- Le robot attend 3 sec
+- Le robot commence à avancer
+
+- Quand le robot croise M1
+  - Le robot allume sa DEL en rouge
+  - Le robot commence à mesurer les distances
+
+- Segment M1-A
+  - Le robot mesure les distances
+  - Le robot suit la ligne
+
+- Quand le robot croise le point A (Maneuvre de changemen de segment vertical)
+  - Continuer jusqu'au point B
+  - Tourner en sens horaire
+  - Avancer jusqu'au point C et dépasser de sorte que le centre de rotation soit
+    au dessus du point C
+  - Tourner sur lui-même pour s'aligner sur le segment CD
+
+- Segment CD
+  - Le robot mesure les distances
+  - Le robot suit la ligne
+
+- Quand le robot croise le point C,
+  - Maneuvre de changement de segment
+
+- Segment EF
+  - Le robot mesure les distances
+  - Le robot suit la ligne
+

@@ -1,0 +1,314 @@
+#+TITLE: Notes on NodeJS
+
+* Notes on Node JS
+
+** Notes on NodeJS
+
+*** Event loop
+
+Node is based on an event loop.  We write our code in JavaScript and when we run
+
+#+BEGIN_SRC sh
+node index.js
+#+END_SRC
+
+=node= sends our code to =V8= which processes it.
+
+When there are no more events to process for the envent loop, the program exits.
+
+*** Calling a script
+
+Initialize the event loop
+Process the file
+Process the event loop
+
+This is why, looking at the end of =index.js= from commit =2cfcaa27d4fbe82f36214f33a9753b14f656908e=, 'hello' gets printed first. 
+
+Even though our calls to =data.read= cause callbacks, it's not async issue where
+the reads on files take longer.  It's because the calls to the callbacks given
+to these functions are merely put into the event loop.  Processing of the event
+loop only happens after =index.js= has been completely loaded, so after 'hello'
+has been printed.
+
+** Node Master class projects
+
+*** Restful API
+
+**** Requirements
+
+1. The *API* listens on a *port* and accepts incoming *HTTP requests* for
+   - POST
+   - GET
+   - PUT
+   - DELETE
+   - HEAD
+2. The API allows a client to connect, then create a new user, then edit and
+   delete that user
+3. The API allows a user to "sign in" which gives them a token that they can use
+   for subsequent authenticated requests.
+4. The API allows the user to "sigh out" which invalidates their token.
+5. The API allows a signed-in user to use thier token to create a new "check".
+6. The API allows a signed-in user to edit or delete any of their checs.
+7. In the background, workers perform all the "checks" at the appropriate times,
+   and send alerts to the user when a check changes its state from "up" to
+   "down", or vice-versa.
+
+
+
+
+**** Getting the data
+***** Basic Scaffolding
+
+ The app is in =~/Documents/GitHub/NodeJS_RestfulAPI/=
+
+***** Starting a server
+
+ First create it and give it a request callback:
+ #+BEGIN_SRC js
+ const http = require('http');
+ requestCallback = function(req, res){
+     res.end('Hello World\n');
+ };
+ const server = http.createServer(requestCallback);
+ #+END_SRC
+
+ and start it
+
+ #+BEGIN_SRC js
+ serverUpCallback = function(){
+     console.log("the server is listening on port 3000");
+ };
+ server.listen(3000,serverUpCallback);
+ #+END_SRC
+
+***** Getting info
+
+ #+BEGIN_SRC js
+ requestCallback = function(req, res){
+     const parsedUrl = url.parse(req.url, true);
+     console.log('Request path: ' + parsedUrl.pathname);
+     console.log('and with these query string parameters: ', parsedUrl.query);
+     console.log('with method ' + req.method);
+     console.log('with headers: ', req.headers);
+     res.end('Hello World\n');
+ };
+ #+END_SRC
+
+***** Getting the payload
+
+ The payload comes as a stream, so you have to do something like this: which is
+ to say what to do when parts of the http payload come in.  In this case
+ appending them to the buffer.
+
+ Since we know we're going to be sending ourselves =utf-8= strings, we decode the
+ payload as such.
+ #+BEGIN_SRC js
+ const http = require('http');
+ const url = require('url');
+ const StringDecoder = require('string_decoder').StringDecoder;
+ requestCallback = function(req, res){
+     const decoder = new StringDecoder('utf-8');
+     var buffer = '';
+     req.on('data', function(data){
+         buffer += decoder.write(data);
+     });
+
+     req.on('end', function(){
+         buffer += decoder.end();
+         console.log('PAYLOAD BUFFER' + buffer);
+     });
+
+     // Send the response
+     res.end('Hello World\n');
+ };
+ #+END_SRC
+
+***** The whole thing
+
+
+ #+BEGIN_SRC js
+ /*
+  * Primary file for the API
+  */
+
+ const http = require('http');
+
+ const url = require('url');
+ const StringDecoder = require('string_decoder').StringDecoder;
+
+ strip_slashes = function(path){
+     return path.replace(/^\/+|\/+$/g, '');
+ };
+ requestCallback = function(req, res){
+
+     const parsedUrl = url.parse(req.url, true);
+
+     const path = strip_slashes(parsedUrl.pathname);
+
+     // obtaining the payload
+     const decoder = new StringDecoder('utf-8');
+     var buffer = '';
+     req.on('data', function(data){
+         buffer += decoder.write(data);
+     });
+
+     req.on('end', function(){
+         buffer += decoder.end();
+         console.log('Request path: ' + path);
+         console.log('and with these query string parameters: ', parsedUrl.query);
+         console.log('with method ' + req.method);
+         console.log('with headers: ', req.headers);
+         console.log('PAYLOAD BUFFER' + buffer);
+         console.log('Request : req.on(end)');
+     });
+
+
+     // Send the response
+     res.end('Hello World\n');
+ };
+ const server = http.createServer(requestCallback);
+
+ serverUpCallback = function(){
+     console.log("the server is listening on port 3000");
+ };
+ server.listen(3000,serverUpCallback);
+
+ #+END_SRC
+
+**** Setting up handlers
+
+We're going to have an object that maps paths to request handlers
+#+BEGIN_SRC js
+const router = {
+    '/': handlers.root,
+    '/ping': handlers.ping
+};
+#+END_SRC
+
+Handlers will be 2-parameter functions.  We give them data and a function to
+call when they're done. 
+#+BEGIN_SRC js
+handlers.ping = function(data, endCallback)
+{
+    endCallback(200, {});
+};
+#+END_SRC
+
+
+The main request handling function will digest the data of the request, and
+bundle it up, select the right handler using the =router= object.
+#+BEGIN_SRC js
+        const data = {
+            'path' : path,
+            'method' : req.method,
+            'headers' : req.headers,
+            'query' : req.query,
+            'payload': JSON.parse(buffer)
+        };
+#+END_SRC
+
+The callback is how the handlers get their response sent off.  They give it to
+the callback with the status code.  It's what ties this particular call to the
+response object.
+#+BEGIN_SRC js
+        handlerEndCallback = function(statusCode, payload)
+        {
+            statusCode = typeof(statusCode) == 'number' ? statusCode : 200;
+            payload = typeof(payload) == 'object' ? payload : {};
+            res.setHeader('Content-Type', 'application/json');
+            res.writeHead(statusCode);
+            res.end(JSON.stringify( payload));
+        };
+#+END_SRC
+
+I'm wondering why we wouldn't just make handlers take a response object as a
+parameter and expect them to call res.end().
+
+Or maybe it's ok, it decouples things; the handlers just compute a payload and
+give a return code.  Nothing more.
+
+
+**** HTTPS
+
+I made a certificate with a command listed in =.data/command.txt=.  It makes a
+key and a certificate.  The =https.createServer()= method takes the key and
+certificate as strings in an object.
+
+#+BEGIN_SRC js
+    const https = require('https');
+    const config = require('./config.js');
+    const httpsServerOptions = {
+        'key': fs.readFileSync(config.https.keyFile),
+        'cert': fs.readFileSync(config.https.certFile),
+
+    };
+    const httpsServer = https.createServer(httpsServerOptions, handleRequest);
+    httpsServer.listen(config.environment.httpsPort, function(){
+        console.log(
+            "the https server is listening on port", config.environment.httpsPort,
+            "in config", config.envName
+        );
+    });
+#+END_SRC
+
+And config just has the paths to these files
+#+BEGIN_SRC js
+var https = {
+    'keyFile': './https/key.pem',
+    'certFile': './https/cert.pem'
+};
+module.exports = {'environment': environment, 'https': https};
+#+END_SRC
+
+**** Actual routes
+
+***** ping
+
+With everything we have in place, adding a handler and a route is no problem!
+#+BEGIN_SRC js
+handlers.ping = function(data, endCallback)
+{
+    endCallback(200, {});
+};
+const router = {
+    '/': handlers.root,
+    '/ping': handlers.ping
+};
+#+END_SRC
+
+***** Storing Data
+
+Error handling removed for brevity.  Everything works with callbacks
+#+BEGIN_SRC js
+data.create = (dir, file, data, callback)
+{
+    filepath = path.join(data.baseDir, dir, file + '.json');
+    console.log('attempting to create', filepath);
+    const writeFile = function(err, fd, object){
+        dataString = JSON.stringify(data);
+        fs.writeFile(fd, dataString, function(err){
+            fs.close(fd, function(err){
+                callback(false);
+            });
+        });
+        
+    }
+    fs.open(filepath, 'wx', function(err, fd){
+        dataString = JSON.stringify(data);
+        fs.writeFile(fd, dataString, function(err){
+            fs.close(fd, function(err){
+                callback(false);
+            });
+        });
+    });
+};
+
+
+data.read = function(dir, file, callback)
+{
+    filepath = path.join(data.baseDir, dir, file+'.json');
+    fs.readFile(filepath, 'utf8', function(err, data){
+        callback(err,data);
+    });
+};
+#+END_SRC

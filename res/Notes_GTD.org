@@ -1,0 +1,775 @@
+#+TITLE: Notes about getting things done
+
+* Ramblings
+
+When you empty your in tray, you clarify a thing into a project.  You file it in
+the "current projects" of your project list.  This works because you know that
+this project will consistently receive your attention, therefore you can get it
+off your mind now.
+
+Putting "Learn guitar" in my "less current projects" works because every week I'll give
+it a tiny bit of attention.  I might decide to move it to another category so
+that I see it less often.
+
+Pre GTD, if I have an idea about cool function to make myself in org-mode, if it's a good
+idea I don't want to lose it.  If it's going to take 10 minutes, do I really
+want to file it in a system somewhere etc... no, so the only way to not lose the
+idea is to do it right now, and by the task ends up taking more than 10 minutes.
+By the time it's done I have another idea that won't take long that I don't want
+to lose.
+
+With GTD, I capture all that stuff and don't interrupt my work.  Later, I empty
+my in tray and maybe I do it then or file it in a "Improve org-mode" or "improve
+Emacs" project.
+
+** GTD-REFERENCE GTD definition of planning
+   CLOSED: [2018-09-14 Fri 20:27]
+   - CLOSING NOTE [2018-09-14 Fri 20:27] \\
+     this is reference material
+The definition of planning is different with GTD than one might think.  Planning
+is more about laying out the actions that need to be taken complete a project.
+This is not about diciding when to do what.
+** GTD-REFERENCE Add a vision part to my org-gtd spec
+
+Implement all the GTD practices in a way that respects the principles.
+
+*** Not automating certain things
+
+**** The review process
+One might be tempted to eliminate the need for reviewing by using all sorts of features of org-mode.
+
+The review process is central to attaining a clear mind.
+
+**** The In Tray
+
+With quick commands and capture templates it can be tempting to get rid of the in tray all together.
+
+Because the review process is so important, the quality of the organized material must be high.
+
+Having the opportunity to bypass the in tray for stuff that is already clear. 
+
+
+*** GTD-IN Main intention of my org-mode implementation of GTD
+    :PROPERTIES:
+    :ID:       B055BEBD-CE00-4FE1-9FB7-9218AF1FA130
+    :END:
+
+Not automate things that should not be automated but accelerate them.  Like the weekly and daily reviews and the processing of items from In.
+
+You can’t get rid of the review by automation.  The review is the only means to attain a clear mind.
+
+Processing of it items must not be rushed lest it diminish the quality of the content and make the review process more difficult.
+
+The power of GTD is in NOT automating certain things. 
+
+* Implementation of GTD in org-mode
+
+** GTD objects
+
+A GTD object is implemented as headline with todo-keyword beginning with ~GTD-~
+followed by the name of a GTD object.
+
+*** GTD-IN
+    :PROPERTIES:
+    :ID:       92459C26-9E22-4FCA-9974-7FE9E15885A5
+    :END:
+
+This is something that has not been processed.  It will become one of the other
+objects when *processing your in tray*
+
+*** GTD-CLARIFY
+    :PROPERTIES:
+    :ID:       CCDF288A-6A97-4295-81F7-48509F531FFE
+    :END:
+
+A kind of state between GTD-IN and GTD-ACTION.  It allows me to move something
+into an action list without having fully clarified it.  It's an "Almost action".
+
+*** GTD-ACTION
+    :PROPERTIES:
+    :ID:       D7709FF1-EC0A-47D0-9C1F-9A3736B11657
+    :END:
+
+This represents an action in the sense of GTD.  They can be standalone actions
+or be part of a project.  An action cannot have sub-actions otherwise it would
+be a project.
+
+*** GTD-NEXT-ACTION
+    :PROPERTIES:
+    :ID:       35862C4E-7859-4B79-A49A-666F504CF552
+    :END:
+
+This is the same kind of object as an action but this marks the action as the
+next action of a project.  This may not seem important but it is.
+
+*** GTD-WAITING
+    :PROPERTIES:
+    :ID:       63D86EEC-C61C-452A-B373-EF4596100444
+    :END:
+An action that cannot proceed because I'm waiting on somebody else.  This is
+different from actions of a project that are not the next action.  Or it can be
+for a task that has been delegated but needs to be monitored actively.
+*** GTD-PROJECT
+    :PROPERTIES:
+    :ID:       8D8E786A-3825-4101-82CE-CF487011B1DC
+    :END:
+
+In GTD, a project is a desired outcome that requires more than one action, and
+for which we find the next action.
+
+In org-gtd, a project has an :OUTCOME: drawer and action children, one of which
+is of type GTD-NEXT-ACTION.  It is recommended to have only one next action
+although I have found it useful to have more than one.
+
+Projects can have sub projects.  David Allen comments on sub projects in his
+book.
+
+*** GTD-SOMEDAY-MAYBE
+    :PROPERTIES:
+    :ID:       8F14A2C0-4D5B-43C0-8FE0-FFFEDD283A09
+    :END:
+
+Same kind of thing as a project but explicitely marked as something different.
+In the "mind like water" philosophy, it might be better to mark something as
+someday maybe and leave it in the project list.
+
+*** GTD-DELEGATED
+This is similar to GTD-WAITING but indicates a lower need for my attention.  I
+can't mark it complete but it doesn't need anything (or much) from me.
+*** GTD-DONE
+
+This is for a completed action or next action or project.  I also use reference
+for completed objects.  The difference being that GTD-DONE means the thing is
+completed and I'll probably put this in some archive.  On the other hand
+GTD-REFERENCE will indicate a completed task that has some reference material
+like the task might have been to send an e-mail and I want to keep a record of
+when I sent the e-mail with the project.
+
+*** GTD-REFERENCE
+
+This marks a headline as *non-actionnable*.  This is important to accelerate the
+review process.  All the GTD lists exept for "in" and "reference" are strictly
+for actionnable items.  If anything is non-actionnable and wants to get in there
+it's going to have to have this badge.
+
+*** Other todo keywords
+
+I kept the regular todo keywords because I want TODOs that are not part of GTD.
+Like TODOs in code and TODOs in my notes.  I want the GTD todos to stand out.
+
+Also, I want to be able to use non-GTD todos in GTD.  For example, a single
+action might be more than one steps.  I want to plan the execution of the action
+while keeping obvious the fact that it is one action.
+
+** GTD files
+*** ~GTD_InTray.org~
+
+The in tray where inputs from the world go to be processed.  All my GTD-INs are
+level 2 headlines in the single level 1 headline "GTD Input Tray".  Org-capture
+is setup to dump things there too.
+
+*** ~GTD_NextActions.org~
+
+This is where actions go. All actions are level 2 headlines allowing the use of
+level 1 headlines for making ad-hoc categories of actions.  I haven't settled on
+any categories.
+
+*NOTE* I deviate a bit from GTD here.  Normally, you're supposed to have all
+your actions and *all* the next actions from your projects in this list.
+
+Because of org-mode, it is better to get a sparse tree of GTD-NEXT-ACTIONS if
+you want a list of all your next actions.
+
+I just copy-paste the headline from a select list of GTD-NEXT-ACTIONS to put
+under a /Project Next Actions/ headline of ~GTD_NextActions.org~ with a link to
+the true next action itself.
+
+*** ~GTD_ProjectList.org~
+
+This is where projects go.  All projects are level 2 headlines of type
+GTD-PROJECT allowing the use of level 1 headlined to divide by review frequency
+required.  (Current Projects: review everyday, Less current projects: review
+once a week ...)
+
+*** ~GTD_SomedayMaybe.org~
+
+A list of GTD-PROJECTs and GTD-SOMEDAY-MAYBEs that need a very low review
+frequency.
+
+*** ~GTD_Reference.org~
+
+The place for non-actionnable things. Information that you don't want to forget
+but that doesn't need its own notes file like the name of someone you met at a
+thing.
+
+When I mark something as GTD-REFERENCE, it can be to indicate to my future self
+to file that here.  Say I complete an action like sending an e-mail and I want
+to make sure that the person got it.  I can leave it in the actions list as
+GTD-REFERENCE or GTD-WAITING depending on how much I care about the thing.  
+
+*** ~wmd.org~
+
+Not strictly part of GTD, but I use it a lot with GTD.  It stands for "What am I
+doing" or if said fast "Wha m'I doing" or "wmd".
+
+It has one headline "Current task" where I put what is the current task that I'm
+on (because I often lose focus).  It has another headline "Candidates" which is
+a select list of tasks.
+
+When the day is over I delete the contents and refill the "Candidates" section
+with candidate tasks for tomorrow.
+
+It is important to reselect the tasks for tomorrow, not simply add to candidates
+because "mind like water".
+
+** Practices
+*** Processing intray
+
+Taking all the items from secondary capture tools like the notes app on your
+phone and dumping them in the ~GTD_InTray.org~ and making everything a level 2
+headline with type ~GTD-IN~.
+
+For each ~GTD-IN~, clarify it and either
+- do something about it and delete it,
+- turn it into a GTD-ACTION and put it in ~GTD_NextActions.org~,
+- turn it into a GTD-PROJECT and put it in ~GTD_ProjectList.org~ and maybe
+  specify the outcome and next action,
+- turn it into a GTD-SOMEDAY_MAYBE and put it in ~GTD_SomedayMaybe.org~,
+- put it somewhere itn GTD-REFERENCE.
+
+See the [[https://gettingthingsdone.com/pdfs/tt_workflow_chart.pdf][GTD flowchart]].
+
+*** Review
+
+Review each list of the system as often as you need to to get it's contents off
+your mind.
+
+Reviewing means looking at each project and action and making sure projects have
+an outcome and next action.
+
+It also means moving things around.  Project in your current projects that
+turn into less current projects, less current projects that turn into current
+projects.
+
+The reviewing is what gets things off your mind, not the knowledge that your
+reminders will pop at the right time.  There is much emphasis on "putting things
+in a trusted system where you know that you'll see the right thing at the right
+time".
+
+This is *not* about finding the perfect reminder system that is so good that you
+never have to look at anything.  The concept of project is too general for all
+projects to be coverable by this sort of system.
+
+It *is* all about review frequency.  The in tray works because when you put
+something in there, in gets off your mind because you know that you'll come back
+to it this evening when you empty your in tray.
+*** Getting things done 
+
+The GTD methodology gives *you* all the tools to have a clear mind and be able
+to select what actions to do at any given time using your intuition and the four
+criteria
+
+- Context: I implement this using tags beginning by "at_" so at_house, at_apt,
+  at_computer, at_poly.  So I'm at_poly and I have some time, I do a search and
+  I get three tasks.  One is to print something, one is to buy something at the
+  store, and one is to sign my teaching contract.  *People can also be contexts*
+  because just as you need to be at_poly to buy the thing, you have tasks for
+  which you need Fred to be there.  I will still write "at_fred" to make
+  explicit that this is a context tag (I could have a document tagged "Fred"
+  because it concerns Fred somehow).
+
+- Energy available : I tag tasks with "easy" so that if I have time but I'm
+  vedge, I can bring up some easy tasks.  Same thing if I'm feeling unproductive and I
+  want to make myself feel better by marking a bunch of things as done.
+
+- Time available : Marking the lengths of tasks can be useful in requesting only
+  short tasks or long tasks to take advantage of the time landscape.
+
+- Priority : Obviously more important tasks need to be done first.  I have a
+  "priority actions" category in my ~GTD_NextActions.org~ file.
+
+** Tools
+*** Agenda and tags
+Tags are used to search for actions any of the tags mentionned above but of
+course, any other tags can be used and searched for.
+
+We don't use agenda functionnalities.  Though we do set a ~org-agenda-files~ to
+tell the tags search which files to search in.
+*** Timestamps
+Use the ~C-c .~ and
+https://orgmode.org/manual/The-date_002ftime-prompt.html#The-date_002ftime-prompt
+to insert dates and timestamps like a boss. And I'm thinking of looking into
+ways of having the word "today " expand to "today [2018-09-11]" when you press
+space after the "y" (like autocorrect on phones) and having other things for
+similar words like "now " would expand to "now [2018-09-11 20:18]".
+*** Perspective
+I have a perspective file that has all by files in a nice layout which I call my
+GTD dashboard.  Accessed with ~SPC a g d~.
+*** Closing notes
+I set org to ask me for closing notes (like asking for a commit message) when I
+make something go from one of the red keywords to one of the green ones.
+
+It's annoying when it is not pertinent but I have found it better to get a
+little extra nudge to write something to close the task even if it bothers me
+when I have to write closing notes for "Wish Sam a happy birthday".
+
+If I want to bypass that I can also just manually type the "GTD-DONE".
+
+The point is to strongly encourage closing notes on tasks.
+*** capture templates
+I have capture templates for some of the GTD objects.  I use these if something
+pops into my head already clarified.
+
+*NOTE* It is important to favor putting things in the In tray.  GTD's power to
+ get things off your mind is based on the review.  Therefore the quality of the
+ organized content is very important.
+** Functions
+#+BEGIN_SRC elisp
+(defun configure-gtd ()
+  (setq org-agenda-files '("~/Dropbox/Notes/gtd/")
+        org-capture-templates '(("i" "GTD Input" entry (file+headline
+                                                        "~/Dropbox/Notes/gtd/GTD_InTray.org"
+                                                        "GTD Input Tray")
+                                 "* GTD-IN %?\n %i\n %a")
+                                ("a" "Action" entry (file+headline
+                                                     "~/Dropbox/Notes/gtd/GTD_NextActions.org"
+                                                     "Next Actions")
+                                 "* GTD-ACTION %?\n Created on %U\n")
+                                ("p" "Project" entry (file+headline
+                                                      "~/Dropbox/Notes/gtd/GTD_ProjectList.org"
+                                                      "Current Projects")
+                                 "* GTD-PROJECT %?\n Created on %U\n")
+                                ("r" "Reference" entry (file+headline
+                                                        "~/Dropbox/Notes/gtd/GTD_Reference.org"
+                                                        "New")
+                                 "* GTD-PROJECT %?\n Created on %U\n")
+                                ("s" "Someday Maybe" entry (file+headline
+                                                            "~/Dropbox/Notes/gtd/GTD_SomedayMaybe.org"
+                                                            "Someday Maybe")
+                                 "* GTD-SOMEDAY_MAYBE %?\n Created on %U\n")
+                                ("j" "Journal" entry (file+olp+datetree "~/Dropbox/Notes/gtd/journal.org")
+                                 "* %?\nEntered on %U\n  %i\n  %a"))
+        ;; TODO This should add the GTD keywords to org-todo-keywords rather than setting it.
+        org-todo-keywords '((sequence "TODO" "WAITING" "VERIFY" "|" "DONE")
+                            (sequence "GTD-IN(i)" "GTD-CLARIFY(c)" "GTD-PROJECT(p)"
+                                      "GTD-SOMEDAY-MAYBE(s)" "GTD-ACTION(a)" "GTD-NEXT-ACTION(n)"
+                                      "GTD-WAITING(w)" "|" "GTD-REFERENCE(r)" "GTD-DELEGATED(g)" "GTD-DONE(d)"))
+
+        org-enforce-todo-checkbox-dependencies t
+        org-enforce-todo-dependencies t
+        org-log-done 'note)
+
+  (define-prefix-command 'gtd)
+  (defun gtd-open-in-tray () (interactive) (find-file "~/Dropbox/Notes/gtd/GTD_InTray.org"))
+  (defun gtd-open-next-actions () (interactive) (find-file "~/Dropbox/Notes/gtd/GTD_NextActions.org"))
+  (defun gtd-open-projects-list () (interactive) (find-file "~/Dropbox/Notes/gtd/GTD_ProjectList.org"))
+  (defun gtd-open-references () (interactive) (find-file "~/Dropbox/Notes/gtd/GTD_References.org"))
+  (defun gtd-open-someday-maybe () (interactive) (find-file "~/Dropbox/Notes/gtd/GTD_SomedayMaybe.org"))
+  (defun gtd-dashboard () (interactive) (persp-load-state-from-file "gtd"))
+  (define-key gtd (kbd "d") 'gtd-dashboard)
+  (define-key gtd (kbd "i") 'gtd-open-in-tray)
+  (define-key gtd (kbd "p") 'gtd-open-projects-list)
+  (define-key gtd (kbd "s") 'gtd-open-someday-maybe)
+  (define-key gtd (kbd "a") 'gtd-open-next-actions)
+  (define-key gtd (kbd "r") 'gtd-open-references)
+  (define-key evil-normal-state-map (kbd "SPC a g") 'gtd)
+  )
+#+END_SRC
+* TODO note about the car appointment:
+  :PROPERTIES:
+  :ID:       80646AD0-9886-4819-ADF0-0F8426027C01
+  :END:
+ I should have tied it with a get money project that would have been “Transfer money out of CELI” project. 
+* TODO Go through recent photos for GTD quotes
+   :PROPERTIES:
+   :ID:       B130EF6A-C583-4C06-A5DB-0345F79F3647
+   :END:
+ [2018-07-14 Sat 23:42]
+ “To be confident that whatever you’re doing at the moment is what you need to be doing.
+* Advantages that programmers have for organization
+
+** TODO Programmer advantage for GTD
+   :PROPERTIES:
+   :ID:       244BD67B-DFCE-4912-BCD2-2F15734F60C4
+   :END:
+Speeding up the weekly review with our particular attention to how fast one can understand something. 
+** Programmers are not necessarily organized ...
+
+But we do have certain ways of doing things that can be very benificial to
+people who are organized.
+
+** Advantages
+
+*** Consider very hard how much time it takes to understand something
+We will attach great importance to changing a line of code that takes 2 seconds
+to understand versus 10 seconds.  All a program is is layer upon layer of
+gymnastics with data.  All you do at every layer is understand the gymnastics,
+change them and repeat.
+
+Understanding code is a central challenge and a major part of the activities of
+programmers and developers.
+
+The conventions, best practices, habits and values that have arisen are useful
+in organizing ones personal data.
+
+- Names
+  - The importance of names
+    I'll say things use a different word for this, the word you have could mean
+    this or this.  When you read this next week, it will take you 2-3 seconds to
+    figure out which one from the context.
+  - The length of names
+    We have long philosophical debates over the length things should have.  A
+    longer name gives more information, a shorter name reads faster.  But there
+    are many more considerations than these when it comes to names in computer
+    science.
+- Best practices
+  - Short functions
+- Habits
+  - Always thinking about how to make things easier to understand for future you
+- Values
+  - Programmers attribute merit to the programmer who writes easy to understand
+    code.
+
+*** We are used to creating and imposing strict rules on ourselves
+- Naming conventions
+  We have certain types of things that we write like this SomeTypeOfThing and
+  other things that we name like this some_type_of_thing and others
+  someTypeOfThing (notice the first letter not capitalized), and some
+  WE_WRITE_LIKE_THIS.
+
+  *As an example*: the all capitals one is for containers that hold a value that
+  will never change.  The fact that it is written like that helps the programmer
+  quickly identify this when he reads code.
+- Coding style
+- We are used to using special keywords for special purposes 
+- Prefixes Inventing prefixes for groups of keywords
+- Markup: We will surround things with various symbols add meaning, like {}[]()
+  and other tags like <a...> ... </a>
+*** Distrusting ourselves
+I prefix all my course material with the code of the course.  Even if I'm
+creating a subdirectory of my main directory for that course.  If I'm sending
+and receiving files with people, I might click on a file, it winds up in my
+downloads folder or on my desktop and I have to click the 
+
+*** Organizing content hirarchically
+
+We understand that when a function becomes too long, it becomes hard to manage
+intellectually.  So we split it up.
+
+Most non-programmers have this intuition but programmers are /insanely/ more
+diligent about this.
+
+If I'm organizing lists or files, as soon as a list or folder starts containing
+10 items or more, I start asking myself if I can't subdivide it.
+
+It turns out that when you have 5 things, you can almost always find two things
+in there that relate to each other more than they do to the other three.  In
+that case, you can create a category for those and a category "others" for the
+rest.
+
+*** A strong desire to help your future self understand what your doing now
+
+Programmers think very hard about how their future self will see what they are
+doing now.  We do a lot of things to help our future self understand.  This is
+mostly in how we name things.
+
+**** Naming things
+I've had badly named variables cause me headaches so many times that in my code,
+I will just sit back and cross my arms until I have the right name for a
+variable.
+
+I have found that not only does this help your future self, but it also helps
+your present self.
+
+**** Leaving explanations
+
+Programmers are always afraid that they won't understand what they were doing.
+Or they don't want to re-solve the problem to understand the solution they're
+looking at.  So they will leave comments about their code.
+
+*** Using non-WYSIWYG tools
+
+Non WYSIWYG tools are actually not that hard to use but it is such a foreign
+concept to non-programmers that even if it were to be easy for them, they won't
+go for it.
+
+This deprives them of the most crucial organizing tool in existence: org-mode.
+
+*** Comfort with code
+
+The idea that the computer might do something with the words in your text or
+the idea of writing text to make the computer do things is something that scares
+or confuses the average user.
+
+However, nothing is that hard about it but people are uncomfortable with that
+idea.
+
+** Mom
+
+*** Hirarchical thinking
+
+"Make this into it's own section".
+
+I've helped her with her files, having her make subdirectories when hitting 5-7
+items in any directory.
+
+With Org-mode, making her try really hard to constantly be on the lookout for
+opportunities to group things together into subsections.  Turning 5 sections
+into two sections with 2 and three subsections respectively.
+
+She started to like how it felt to have things organized this way and a couple
+times, she was proud to say "look I took notes on the condo and notes on the
+house and I made a section Notes on Realestate, and I made those two subsections
+of that".
+
+This is an extremely powerful idea.
+
+*** Helping your future self
+
+Just so many times going "Give this section a better title" and "there's no way
+you'll understand that later".  Programmers are really good at this.
+
+Often I've asked for explanations about the particular item we were filing and
+added that to the item before filing it.
+
+*** Non-WYSIWYG tools
+Mom was able to grasp the concept and she's been able to write an email in
+org-mode with the normal workflow
+- Create new file and write stuff
+- As long as the email is not to your liking, repeat this:
+  - Export the file
+  - Read the exported file
+  - Edit the org-mode file
+- Copy-paste into an email and send
+
+
+
+*** Comfort with code
+
+Given that she was able to write emails in org-mode, she's OK with the idea of
+the computer interpreting certain symbols in text.
+
+However, I haven't come around to the idea of showing her commands.
+
+* Notes for Alex
+
+Options:
+- Rundown of the concepts so you can get started
+- First steps so you can get started without knowing the rest
+- Rundown of the process
+- Tools and implementation.
+- How it has changed things for me
+- Comment about being scared to see a truly complete list of all your
+  commitments and everything you have going on big and small.
+** Criteria for deciding actions
+*** Context
+*** Energy available
+** Inputs
+
+** Other concepts
+*** Projects and Actions
+An *action* is something you can do all at once.  A *project* is anything you
+want to do that takes *more than one action*.
+
+Both of these *actions* and *projects* exist because you want to achieve a
+certain *outcome*.  The outcomes for actions are usually evident "Call Mario for
+his birthday" has the desired outcome of "I have called Mario for his birthday".
+
+But when an item from In becomes a project, it should be assigned an outcome.
+** From input to organized
+
+*** Capture
+  Putting things in a set of lists collectively referred to as In.
+
+  In be a combination of more than one list.  It's where we put things to dump
+  them out of our mind.
+*** Clarify
+  Turning "meeting Alex" into "Plan meeting with Alex".
+*** Organize
+  Putting the "Plan meeting with Alex" in the right place so that it pops in my
+  face at the right time.
+**** The 4 lists 
+- Actions
+- Projects
+- References
+- SomedayMaybe
+**** Other
+The book contains many tips that can be used to help.
+*** Reflect
+*Not there yet in my own implementation*.  This is where you make decisions
+about what actions you are going to select.
+
+The book gives some methodology that helps do this efficiently.  In essense it
+is reviewing certain things at different frequencies.
+*** Engage
+This is the part where you do the actions.  *I'm not there yet either*.
+
+** First steps
+
+*** Setup capturing tools
+- A designated file on your phone
+- A designated text file on your computer
+- ...
+
+*** Capture things
+
+** Org-mode
+I think the power it gives for organizing thoughts, projects, ideas and
+information is worth putting up with the quirks of emacs.
+
+These are
+- You have to press CTRL-X CTRL-S to save.
+- Emacs makes a distinction between an open file (that it calls a buffer) and
+  the actual file on disk (which it calls a file).  Therefore the names of some
+  commands may sound weird.
+- CTRL-Anything does something.  So it's easy to make emacs do something by
+  mistake.
+
+To mitigate this there is
+- Remembering some of the keys
+- Using a package called ergoemacs that sets many of the familiar OS shortcuts
+  like CTRL-C and CTRL-V to their usual behavior
+- Knowing about buffers and files makes this problem disappear.
+* DONE First pass at implementing the system
+  CLOSED: [2018-08-26 Sun 18:04]
+  :PROPERTIES:
+  :ID:       8E193A19-8DA7-4DBA-9CA5-631C6A946E73
+  :END:
+  :LOGBOOK:
+  CLOCK: [2018-08-23 Thu 17:37]
+  :END:
+
+** DONE Defining todo keywords
+   CLOSED: [2018-08-26 Sun 17:58]
+   :PROPERTIES:
+   :ID:       9C4F0B37-62C8-4736-82CD-0938E5E42C80
+   :END:
+
+| SPC u SPC u C-c C-t | Change the keyword set    |
+| C-c C-t             | cycle keywords within set |
+** DONE Gather inputs into one file
+   CLOSED: [2018-08-26 Sun 17:58]
+   :PROPERTIES:
+   :ID:       36B7306C-A748-401B-8203-DDE0AB896AEA
+   :END:
+- [X] Notes_BUCKET
+  - [X] GTD_InTray (use that as the receptacle)
+  - [X] Search for TODOS
+- [X] Org capture on my phone
+- [X] Notes on my cell
+
+** DONE Create Infrastructure
+   CLOSED: [2018-08-26 Sun 17:59]
+   :PROPERTIES:
+   :ID:       001300CE-3196-4EA0-909C-A9FB49BDFE73
+   :END:
+- [X] Location
+- [X] Subfolder structure in Location
+- [X] org-mode master files
+  - [X] Project list
+  - [X] Next actions list
+2018-08-23
+** DONE Clear up old org-files I may have used as buffers to write emails.
+   CLOSED: [2018-08-26 Sun 18:04]
+   :PROPERTIES:
+   :ID:       16B824A8-31AE-41B7-A0D2-9079EFB148E2
+   :END:
+
+** DONE Process in-items
+   CLOSED: [2018-08-26 Sun 18:04]
+   :PROPERTIES:
+   :ID:       183EA7CC-E2E5-44F9-AA67-14446EB0B67B
+   :END:
+
+* Ideas
+** Idea : Have a LAST_TIME_CURATED property to certain todo lists
+ Also a NEXT_CURATE property that I could set so my curating routine would be
+ selecting all the items for the NEXT_CURATE is passed.
+
+ On each item, I curate the item, then mark the LAST_CURATED, then select a
+ NEXT_CURATE.
+
+* Notes about getting things done
+
+** Notes from the book
+
+*** The three key objectives
+
+1. *Capturing*
+   Capturing anything that needs to get done, or intests me or has usefulness.
+2. *Directing*
+   Making decisions about inputs to have an inventory of next actions that you cna
+   implement or renegotiate in the moment.
+3. *Curating and coordinating*
+
+
+
+
+
+** Notes from me
+*** gtd-containers
+   
+ See todo notes about containers and how they could be related to the state
+ machines.
+
+**** gtd-container-1
+
+**** Emacs/Spacemacs
+***** Projects
+***** Tasks
+***** DONE Learn Emacs lisp
+      CLOSED: [2018-07-29 Sun 15:13]
+      :PROPERTIES:
+      :ID:       6567DC08-4DDC-4341-B621-9EA3706D46E9
+      :END:
+****** DONE Write one thing in emacs lisp
+       CLOSED: [2018-07-29 Sun 15:13]
+       :PROPERTIES:
+       :ID:       46CD5CF1-1FE2-4D6C-8C06-2C4584234287
+       :END:
+
+* Quotes and passages
+
+** Passages
+   
+*** to be confident that what you're doing right now is what you need to be doing
+ * Quoted from memory, possibly not the exact wording
+*** An ambient angst pervades our society
+ --there'sa sense that somehow there's something we should be doing that we're
+ not, which creates a tension for which there is no resolution and from which
+ there is no rest.
+
+*** It's possible for a person to have an overwhelming number of things to do and...
+function productifely with a clear head and a positive sense of relaxed control.
+That's a great way to live and work, at elevated levels of effectiveness and
+efficiency.  It's also the best way to be fully present with whatever you're
+doing, appropriately engaged in the momemnt.  It's when time disappears and your
+attention is completely at your command.  What you're doing is exactly what you
+ought to be doing, given the whole spectrum of your commitments and interests.
+You're fully available.  You're "on".
+*** A paradox has emerged in this new millenium: people have enhanced quality of life,
+but at the same time they are adding to their stress levels by taking on more
+than they have the resources to handle. [...] The plethora of options and
+opportunities brings with it the pressures of decision making and choices.
+
+** Quotes
+
+*** "As to methods" Ralph Waldo Emmerson
+As to methods there may be a million and then some, but the principles are few.
+The man who grasps principles can successfully select his own methods.  The man
+who tries methods, ignoring principles, is sure to have trouble.
+*** "Anxiety is caused by" David Kekich
+Anxiety is caused by a lack of control, organization, preparation, and action.
+*** "There is one thing we can do," Mark Van Doren
+and the happiest people are those who can do it to the limit of their ability.
+We can be completely present. We can be all here. We can give ... our attention
+to the opportunity before us.
+* References
+** GTD-REFERENCE Recommendation from David Allen GTD for the book “The Power of Habit” by Charles Duhiggs. 
+   CLOSED: [2018-08-23 Thu 22:12]
+   :PROPERTIES:
+   :ID:       3F91848B-144D-4233-9503-862E4619A01F
+   :END:
+  [2018-07-14 Sat 23:20]
+  Willpower: Rediscovering the greatest human strength.
+  By Roy Baumeister and John Tierney.

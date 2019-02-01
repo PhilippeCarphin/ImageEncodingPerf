@@ -1,0 +1,48 @@
+#+TITLE: Notes about setting up a new UNIX user
+
+* Notes about setting up a new UNIX user
+
+#+BEGIN_SRC sh
+    1  chsh fish
+    2  chsh sagagnon
+    3  chsh
+    4  brew install fish
+    5  fish
+    6  chsh
+    7  git clone https://github.com/philippecarphin/configurations .philconfig
+    8  mkdir -p ~/.local/bin ~/.local/man/man1 ~/Documents/GitHub
+    9  cd ~/Documents/GitHub/
+   10  git clone https://github.com/philippecarphin/link-pwd
+   11  git clone https://github.com/philippecarphin/utils
+   12  git clone https://github.com/philippecarphin/pyenv
+   13  cd .philconfig
+   14  cd ~/.philconfig
+   15  cd ~/Documents/GitHub/link-pwd
+   16  ./link-pwd.sh link
+   17  cd ../utils
+   18  cd .philconfig
+   19  cd ~/.philconfig
+   20  ~/.local/bin/link-pwd link -g zsh
+   21  rm ~/.config/fish
+   22  rm -r ~/.config/fish
+   23  ~/.local/bin/link-pwd link -g zsh
+   24  ~/.local/bin/link-pwd link -g git
+   25  ~/.local/bin/link-pwd link -g spacemacs
+   26  cd ..
+   27  git clone https://github.com/syl20bnr/spacemacs .emacs.d
+   28  git clone https://github.com/robbyrussell/oh-my-zsh .oh-my-zsh
+   29  history > sam_history_1.txt
+#+END_SRC
+
+#+BEGIN_SRC sh
+    1  vim .zshrc
+    2  touch .philconfig/local_file
+    3  emacs
+    4  kill 3652
+    5  ssh -Y sagagnon@localhost
+    6  emacs
+    7  kill 3764
+    8  emacs -t
+    9  emacs --daemon
+   10  ec -t
+#+END_SRC

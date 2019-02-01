@@ -1,0 +1,21 @@
+#+TITLE: IOS development
+
+* IOS development
+
+** XCode walkthrough
+
+*** New project
+
+**** Steps in the wizard
+
+From the welcome screen click *New XCode project*
+
+Select *iOS* at the top
+
+Select *Single View App*.  This is the most basic template.
+
+The boxes at the bottom may be left unchecked for toy projects.
+
+**** Contents of new project
+
+

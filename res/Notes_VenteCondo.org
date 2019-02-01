@@ -1,0 +1,82 @@
+#+TITLE: Vente Condo
+
+* Vente Condo
+
+** Agenda avec Iris demain
+
+*** Vente du condo à Douglas Carphin,
+
+on souhaite vendre le condo, on a besoin de documents officiels sur
+- Transfert
+- Propriété
+
+Demander à Jacques Mathe.
+
+Called this morning [2018-09-11 18:22] and Iris (Indian accent) told me that I
+needed to expect a call from Sasha or Sara.
+
+** Données
+
+*** [TODO] Arpenteur Géomètre
+Phil: A.G. Engagé le 29 aout
+A.G.: Accepté le mandat le 29 aout
+Phil: Manqué une occasion de profiter d'une cancellation de l'a.g. le 4 sept
+En attente de rappel, 
+
+*** [W] Documents du notaire
+Phil: Parlé à Iris Lundi,
+En attente de rappel de Sasha de Birbrier Cooper
+
+*** [TODO] Questions sur l'immeuble
+Paul : apeler Normand Croteau pour lui poser les questions
+
+*** [TODO] Documents de l'immeuble
+Paul : demander à Normand Croteau s'il peut nous fournir ces documents ou
+nous dire qui peut nous les fournir.
+
+ - [ ] Convention de copropriété
+ - [ ] États financiers
+ - [ ] Procès verbaux de trucs de condo.
+
+** Questions pour Paul à poser à Normand Croteau
+*** Questions du questionnaire de Nicole
+
+ - [ ] *D2.5* Quelle est l'année de construction du bâtiment?
+
+***** TOITURE
+ - [ ] *D7.1* Quelle est l'année d'installation du revêtement de la toiture
+ - [ ] *D7.2* Avez-vous des documents constatant les travaux de remplacement du revêtement de la toiture?
+ - [ ] *D7.3* À votre connaissance, y a-t-il ou y a-t-il déjà eu accumulation de glace ou de glaçons en bordure du toit l'hiver?
+
+***** ÉNERGIE
+ - [ ] *D9.4* L'immeuble est-il desservi par des services de gaz naturel?
+ - [ ] *D9.5* L'immeuble est-il raccordé à des services de gaz naturel?
+ - [ ] *D9.7* L'immeuble est-il muni d'une génératrice
+
+***** CHAUFFAGE CLIMATISATION ET VENTILATION
+ - [ ] *D10.4* Y a-t-il un échangeur d'air
+   a. [ ] Si oui, y a-t-il déjà eu des problèmes reliés à l'échangeur d'air
+   b. [ ] Quelle est l'année d'installation de l'échangeur d'air?
+
+***** INSECTES ET ANIMAUX NUISIBLES
+ - [ ] *D11.1* À Votre connaissance, y a-t-il ou y a-t-il déjà eu présence d'insectes ou d'animaux nuisibles (ex.: fourmis charpentières, chauve-souris)?
+
+ - [ ] *D13.1* En outre de ce qui a été mentionné plus haut, à votre connaissance, l'immeuble a-t-il déjà subi des dommages à la suite d'un ou de plusieurs événements tels que le verglas, vent, inondation, incendie ou autre?
+
+*** Documents à demander
+
+Pour chaque document, mentionner le nom, et noter ce qu'il dit.
+
+ - [ ] Convention de copropriété
+ - [ ] États financiers
+ - [ ] Procès verbaux de trucs de condo.
+** Documents à obtenir
+*** Convention de copropriété
+**** Est-ce qu'il y a des règlements additionnels à la convention de copropriété.
+*** Tous les papiers de 2017-2016
+**** Proces verbaux 2017
+**** Prévisions financiéres
+*** Assurance police de Nicole
+ Est-ce la police d'assurance a étée renouvelée.
+
+

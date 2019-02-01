@@ -1,0 +1,660 @@
+#+TITLE: Poly Computing environment
+
+* Le guide suivant
+
+contient des notes sur des choses que j'ai faites au fil du temps pour avoir un
+environnement à mon goût et que j'ai souvent à refaire.
+
+J'ai ajouté des conseils que j'ai donnés.
+
+* Partie 1 : Beginner stuff
+Configurations de base de l'environnement Linux et les débuts de BASH.
+** Environnement informatique Poly
+*** Comment mettre son environnement en anglais
+**** Raisons pour l'anglais
+
+  Pour beaucoup d'applications, il est souvent préférable que celles-ci
+  communiquent avec nous en anglais.
+
+  Non-seulement obtient-on de meilleurs résultats en googlant les messages
+  d'erreur mais en plus, les menus utiliseront la même terminologie que les
+  meilleurs guides et tutoriels de YouTube et autres.
+
+**** Comment faire
+
+  Pour dire à ces applications d'utiliser l'anglais, il suffit de mettre la ligne
+  suivante dans son bashrc:
+
+  Dans un terminal on peut ouvrir notre bashrc dans Visual Studio Code en écrivant
+  #+BEGIN_SRC sh
+  code ~/.bashrc
+  #+END_SRC
+
+  La ligne à ajouter est
+
+  #+BEGIN_EXAMPLE
+  export LANG=en_US.UTF-8
+  #+END_EXAMPLE
+
+  Des applications comme
+  - make
+  - gcc
+  - g++
+  - gitk
+  - git-gui
+  regardent cette variable pour choisir quel langage utiliser.
+
+**** Fedora en anglais
+
+  Pour mettre fedora en anglais, dans les préférences, choisir l'item "Langage" et
+  mettre "English (United States)" pour Langage et Région.
+
+*** Clavier
+**** Layout (agencement de touches)
+
+  Je n'ai encore jamais rencontré de programmeur aguerri qui n'utilise pas le
+  clavier US la raison pour ce choix est que nos symboles préférés (={}[]'"~<>\/=)
+  sont à des endroits faciles d'accès.
+
+  Dans les préférences système, choisir l'item *Clavier*, en haut, choisir
+  "Layouts" cliquer sur le petit "+" et ajoutez le clavier *English (US)*.
+
+**** Écrire en français
+
+***** Deux agencements et un raccourci pour alterner entre les deux
+  La façon pas trop compliquée d'écrire en français est d'avoir le clavier
+  Canadien multilingue standard comme autre agencement de clavier et de changer
+  entre les deux.
+
+  Pour cette raison, dans *Préférences \rightarrow Keyboard \Rightarrow Layouts*, cliquer sur
+  *Options* en bas à droite, trouver *Switching to another layout* et choisissez
+  la combinaison de touches qui fait votre affaire.
+
+  Sachez que pour mon choix *CTRL+SHIFT*, l'ordre dans lequel on appuie les
+  touches fait une différence.
+
+***** Un seul agencement
+
+  Le layout *English (US, Intl with dead keys)* est un peu spécial, je viens de
+  commencer à l'utiliser.
+
+**** Cap-Lock
+
+  La touche la plus inutile du monde!
+
+  Il est très commun de changer son comportement pour qu'elle agisse comme une
+  autre touche.  Même que certains claviers sont fabriqués avec une touche CTRL à
+  sa place (HHKB, les claviers Realforce ont des petites swithc à l'arrière du
+  clavier pour transformer CapsLock en CTRL).
+
+  *Sur les ordis de Poly*, on peut le faire dans Fedora: Aller dans *Préférences \rightarrow
+  Keyboard \Rightarrow Layouts \rightarrow Options* et trouver l'option *CapsLock key behavior*.
+
+  Choisir l'option *Capslock is also CTRL*.
+
+** BASH
+
+*** Commandes
+ Pour l'instant, disons juste ce qu'est une commande.
+
+**** Mots
+
+ Une commande est formée de mots délimités par des espaces.  On peut empêcher les
+ espaces de délimiter des mots en utilisant les guillemets, apostrophes et le
+ backslash.
+
+ La ligne suivante contient 9 mots:
+ #+BEGIN_EXAMPLE
+ git commit -m Ceci est un message de commit
+ #+END_EXAMPLE
+
+ Par contre, nous voulons qu'elle contienne 4 mots:
+ #+BEGIN_SRC sh
+ git commit -m "Ceci est un message de commit"
+ git commit -m 'Ceci est un message de commit'
+ git commit -m Ceci\ est\ un\ message\ de\ commit
+ #+END_SRC
+
+**** Commandes
+
+ Une commande est formée d'un ou plusieurs mots séparés par certains symboles.
+
+ Le premier mot d'une commande est un programme exécutable ou un script.  Les
+ mots suivants sont passés à ce programme et il les regarde et fait ce qu'il veut
+ avec.
+
+*** Autocomplétion
+
+ La touche *TAB* est votre meilleur ami dans BASH.
+
+* Partie 2 : Approfondissement léger
+** BASH
+
+*** Commandes plus avancées
+
+On peut combiner des commandes en utilisant les opérateurs suivants:
+
+| Opérateur      | Fonction                                                                                          |
+|----------------+---------------------------------------------------------------------------------------------------|
+| cmd_1 ; cmd_2    | Fin de commande, permet de mettre plusieurs commandes sur une même ligne                          |
+| cmd_1 && cmd_2   | ET logique avec évaluation minimale: n'exécuter la deuxième commande que si la première a réussie |
+| cmd_1 \vert\vert cmd_2   | OU logique avec évaluation minimale: n'exécuter la deuxième commande que si la permière a échoué  |
+| cmd_1 \vert cmd_2    | Rediriger la sortie de la première commande vers l'entrée de la deuxième commande                 |
+| cmd > fichier  | Rediriger la sortie de la commande dans le fichier (écrase le contenu précédent du fichier)       |
+| cmd >> fichier | Rediriger la sortie de la commande dans le fichier (ajoute à la fin du fichier)                   |
+
+*Voir "IO redirection" sur youtube pour des explications de =|,>,>>=*
+
+*** Variables
+**** Définition de variables
+
+ #+BEGIN_SRC sh
+ ma_variable=valeur_de_ma_variable
+ ma_variable_avec_espaces="La variable contient des espaces"
+ ma_variable=ceci est une mauvaise definition de variable
+ #+END_SRC
+
+**** Voir ou utiliser la valeur d'une variable
+
+ L'opérateur signe de piastre ou "dollar sign" est utilisé pour obtenir la valeur
+ d'une variable.  Par exemple,
+
+ #+BEGIN_SRC sh
+ mon_fichier=~/Documents/un_certain_fichier.txt
+ destination=~/Documents/projet/sources/
+ mv $mon_fichier $destination
+ #+END_SRC
+
+ ou si on veut imprimer à l'écran la valeur d'une variable, on peut faire
+
+ #+BEGIN_SRC sh
+ echo $ma_variable
+ #+END_SRC
+
+
+** VIM
+
+Jérôme Collin me trouve ben drôle d'utiliser vim alors que des IDE existent.
+Mais l'editing modal est vraiment très le fun une fois qu'on est habitué.
+
+Dans tous les cas, on n'est pas un adulte en informatique si on ne sait pas
+quelques éléments de vim.
+
+- Vim a trois modes
+  - Insert-Mode : Les touches du clavier insèrent des caractères
+  - Normal-mode : Les touches font autre chose.
+  - Command-mode : Pour écrire des commandes à vim.
+
+En *normal-mode* appuyer sur *i* nous met en *insert-mode*.  En *insert-mode*
+appuyer sur *ESC* nous met en *normal-mode*.  En *normal-mode*, *:* nous met en
+*command mode* (notre curseur saute au bas de l'écran.
+
+Quand on veut faire un message de commit et prendre son temps pour écrire
+quelque chose de pertinent, on peut faire
+
+#+BEGIN_SRC sh
+git commit
+#+END_SRC
+
+sans le =-m "message de commit"=.  Git va ouvrir un fichier avec vim pour qu'on
+écrive notre message de commit dedans.  Quand on quitte, git va prendre ce
+fichier comme message de commit.
+
+#+BEGIN_SRC sh
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	new file:   aasdf
+#
+#+END_SRC
+
+On pese sur *i* pour écrire du texte, ensuite, quand on a fini d'écrire, on pese
+sur *ESC* pour retomber en *normal-mode* et finalement, on fait *:* pour écrire
+une command.  La commande est *wq* (pour save-and-quit), on pese *ENTER*.
+
+* Partie 3
+** BASH Plus avancé
+*** L'environnement
+**** Définition
+
+L'environnement est une zone de mémoire ou vivent des chaines de caractères.
+C'est une zone mémoire spéciale que tous les processus connaissent et regardent
+pour savoir certaines choses.
+
+Quand un programme /parent/ lance un programme /fils/ (comme quand on lance un
+programme à partir de BASH), le programme /fils/ reçoit une copie de
+l'environnement du /parent/.
+
+C'est donc *une méthode de communication entre programmes*: Dans notre session
+BASH, on change ou on ajoute des variables d'environnement.  Ensuite, les
+programmes qu'on lance peuvent regarder la valeur de ces variables.  Par exemple
+la variable =LANG= qui contrôle le langage utilisé par les programmes qui
+regardent sa valeur. 
+
+**** Voir l'environnement
+
+La commande 
+
+#+BEGIN_SRC sh
+env
+#+END_SRC
+
+imprime l'environnement à la console.
+
+**** Obtenir la valeur d'une variable d'environnement dans BASH
+
+On obtien la valeur d'une variable d'environnemtn et dans BASH avec l'opérateur
+signe de piastre.
+
+**** Variables de shell et variables d'environnement
+
+Les syntaxes pour les variables d'environnement et les variables de she
+
+**** Note
+
+ Si on défini une variable sans le mot =export= mais qu'une variable
+ d'environnement ayant ce nom existe dégà, nous allons modifier la variable
+ d'environnement.
+
+ Félicitations!  Très peu de gens sont au courant de ce fait.
+
+ *Conseil et convention* Les variables d'environnement ont presque toujours un
+ nom tout en majuscules.  Donc si on évite les variables en all-caps dans nos
+ scripts, on se donne de meilleures chances de ne pas bousiller une variable
+ d'environnement.
+
+**** Plus sur les guillements
+
+*** Capturer la sortie d'une commande
+
+L'opérateur "$()" permet de capturer la sortie d'une commande.  Par exemple:
+
+#+BEGIN_SRC sh
+la_date=$(date)
+echo $la_date
+#+END_SRC
+
+La commande =date= produit en sortie la date d'aujoud'hui.  On peut donc lire
+"=la_date= est égale à la sortie de la commande =date=".
+
+*** Alias
+
+ La première configuration est de faire des alias.  Un alias nous permet de
+ définir un raccourci pour une commande plus longue.
+
+ Par exemple,
+
+ #+BEGIN_SRC sh
+
+
+ #+END_SRC
+*** Comment le programme utilise les arguments
+
+ Faire des expériences avec le programme suivant:
+
+ #+BEGIN_SRC c
+   #include <stdio.h>
+
+   int main(int argc, char **argv)
+   {
+           for(int i = 0; i < argc; i++){
+                   printf("argv[%d] = %s\n", i, argv[i]);
+           }
+   }
+ #+END_SRC
+
+ qu'on peut compiler avec la commande
+ #+BEGIN_SRC sh
+ gcc mon_programme.c -std=c99
+ #+END_SRC
+
+ Et maintenant, on peut faire des expériences avec ce programme pour comprendre
+ comment les arguments d'une commande sont vus par le programme qui les reçoit.
+
+ #+BEGIN_SRC sh :results output :exports both
+ ./a.out un_mot un_autre_mot 'Single quotes' "Double quotes"
+ #+END_SRC
+
+ #+RESULTS:
+ : argv[0] = ./a.out
+ : argv[1] = un_mot
+ : argv[2] = un_autre_mot
+
+ Les guillemets regroupent empêchent les espaces de briser des mots.  Dans les
+ guillemets doubles, les variables sont évaluées et dans les guillemets simples
+ elles ne le sont pas.
+
+ #+BEGIN_SRC sh :results output :exports both
+ ma_variable=valeur_de_ma_variable
+ ./a.out "Ma variable vaut $ma_variable" 'Des variables ne sont pas évaluées dans les guillemets simples : $ma_variable'
+ #+END_SRC
+
+ #+RESULTS:
+ : argv[0] = ./a.out
+ : argv[1] = Ma variable vaut valeur_de_ma_variable
+ : argv[2] = Des variables ne sont pas évaluées dans les guillemets simples : $ma_variable
+
+ Il en va de même pour l'opérateur signe-de-piastre-parentheses^*:
+ #+BEGIN_SRC sh :results output :exports both
+ ./a.out "La date est $(date)"
+ #+END_SRC
+
+ #+RESULTS:
+ : argv[0] = ./a.out
+ : argv[1] = La date est Sun Nov 11 23:33:00 EST 2018
+
+ #+BEGIN_SRC sh :results output :exports both
+ ./a.out 'La date est $(date)'
+ #+END_SRC
+
+ #+RESULTS:
+ : argv[0] = ./a.out
+ : argv[1] = La date est $(date)
+
+ Regardez la différence que fait les guillements:
+ #+BEGIN_SRC sh :results output :exports both
+ ./a.out $(date)
+ #+END_SRC
+
+ #+RESULTS:
+ : argv[0] = ./a.out
+ : argv[1] = Sun
+ : argv[2] = Nov
+ : argv[3] = 11
+ : argv[4] = 23:49:36
+ : argv[5] = EST
+ : argv[6] = 2018
+
+ et
+
+ #+BEGIN_SRC sh :results output :exports both
+ ./a.out "$(date)"
+ #+END_SRC
+
+ #+RESULTS:
+ : argv[0] = ./a.out
+ : argv[1] = Sun Nov 11 23:50:08 EST 2018
+
+ On voit que le singe de piastre est évalué et le résultat est passé au
+ programme.  Ce n'est pas le programme appelé qui reçoit "$(date)" et l'évalue.
+
+ .^* Je dis vraiment "signe de piastre parentheses" ou "dollar sign parenthese"
+ quand je parle en français.
+
+*** Convention utilisée par les programmes sur Unix
+
+ Le mécanisme d'une série de chaînes de caractères est très général mais la
+ majorité des programmes sur Unix suivent une convention.
+
+ Considérons le programme suivant:
+
+ #+BEGIN_SRC c
+
+   #include <stdio.h>
+   #include <string.h>
+   #include <stdlib.h>
+
+   int string_equal(char *str1, char *str2){
+           return (strcmp(str1, str2) == 0);
+   }
+
+   int main(int argc, char **argv){
+           char *nom;
+           char *prenom;
+           long int num_telephone;
+           int print = 0;
+           for(int i = 1; i < argc; i++){
+                   if(string_equal(argv[i], "--prenom") || string_equal(argv[i], "-p")){
+                           i++;
+                           prenom = argv[i];
+                   } else if(string_equal(argv[i], "--nom") || string_equal(argv[i], "-n")){
+                           i++;
+                           nom = argv[i];
+                   } else if(string_equal(argv[i], "--tel") || string_equal(argv[i], "-t")){
+                           i++;
+                           num_telephone = atol(argv[i]);
+                           if (num_telephone < 1000000000 || num_telephone > 9999999999){
+                                   printf("ERREUR : Le numéro %s doit avoir exactement 10 chiffres\n", argv[i]);
+                           }
+                   } else if(string_equal(argv[i], "--print") || string_equal(argv[i], "-v")){
+                           print = 1;
+
+                   } else {
+                           printf("ERREUR : argument inconnu : %s\n", argv[i]);
+                   }
+           }
+
+           // Lecture des arguments terminée, le travail commence
+
+           if(print){
+                   printf("Personne : nom=%s, prenom=%s, tel=%lu\n", nom, prenom, num_telephone);
+           }
+
+   }
+ #+END_SRC
+
+ Les programmes Unix font une version plus évoluée de ce que le programme
+ précédent fait, mais il respecte la convention suivante:
+
+ - Les arguments commençant par "-" ou "--" sont appelés des *options*.
+   - des options peuvent avoir une valeur comme =nom=, =prenom=, =tel=
+   - ou ne pas en avoir comme =print=
+   - en général, les options ont une version longue précédée de "--" et une
+     version à une lettre précédée de "-".
+ - Le reste des arguments sont appelées des *arguments positionnels* car leur rôle
+   est déterminé par leur position dans la commande.  Par exemple, la commande
+   =mv=, tous les arguments sauf le dernier seront déplacés vers la destination
+   donnée par le dernier argument.
+
+ Dans une version simplifiée du traitement des arguments, on retrouverait
+
+ #+BEGIN_SRC c
+   if(string_equal(argv[i], "-I")){
+       i++
+       // Ajouter argv[i] à la liste des dossiers à regarder pour trouver les fichier *.h
+   }
+ #+END_SRC
+
+ La convention des tirets et double tirets n'est pas toujours respectée:
+
+ #+BEGIN_SRC sh
+ find ~/Documents -name facture.pdf
+ #+END_SRC
+
+ pour chercher un fichier dont le nom est =facture.pdf= dans le dossier =~/Documents=.
+
+*** Arguments python
+Le module sys nous donne une liste argv contenant les mots de la ligne de commande
+#+BEGIN_SRC python :results output
+import sys
+
+nb_arguments = len(sys.argv)
+i = 0
+for argument in sys.argv:
+    print("Argument {} = {}".format(i, argument))
+    i += 1
+#+END_SRC
+
+#+RESULTS:
+: Argument 0 = 
+
+
+* Partie 4
+** BASH Encore plus avancé
+
+*** Certaines variables d'environnement
+
+**** =PATH=
+**** =USER=
+**** =LD_LIBRARY_PATH=
+**** =CD_PATH=
+**** Autres
+
+*** Quelques outils UNIX
+
+**** grep
+**** find
+**** echo
+
+* Partie 5
+** BASH Crissement avancé
+
+*** Scripts
+
+* Partie 6
+** BASH Guru level stuff
+
+Aucun guide ne peut faire un guru de quelqu'un.  La seule façon de devenir un
+guru est de gosser avec son shell, configurer son environnement, écrire des
+scripts pour automatiser des choses etc.  Mais voici des choses que les guru
+savent que les non-guru ne savent pas.
+
+*** Connaître les différentes syntaxes de tests en BASH
+
+#+BEGIN_SRC sh
+if [ ... ] ; then
+    ...
+elif ... ; then
+    ...
+else
+    ...
+fi
+
+if [[ ... ]] ; then
+    ...
+elif ... ; then
+    ...
+else
+    ...
+fi
+#+END_SRC
+
+*** Et les autres structures de contrôles
+
+#+BEGIN_SRC sh
+for file in $(ls Documents) ; do
+
+done
+while ... ; do
+
+done
+case i in ... 
+    option_a)
+        ...
+        ;;
+    option_b)
+        ...
+        ;;
+esac
+#+END_SRC
+
+*** Et les syntaxes moins souvent utilisées
+
+#+BEGIN_SRC sh
+for ((i=0; i < 10; i++))
+somme=$((8 + 10))
+
+#+END_SRC
+
+*** Bien connaître les outils UNIX
+
+Comme grep, find, wc, sort et pouvoir les combiner
+
+*** Avoir une connaissance général des variables d'environnements les plus importantes
+
+PATH, LANG, ...
+
+*** Savoir utiliser 
+* Other stuff
+  
+** Grep and environment
+#+BEGIN_SRC sh :results output
+env | grep TERM
+#+END_SRC
+
+#+RESULTS:
+: TERM_PROGRAM=iTerm.app
+: TERM_PROGRAM_VERSION=3.2.6beta3
+: TERM_SESSION_ID=w0t0p0:AD7E7746-4D43-438A-B61C-598A30332562
+: ITERM_PROFILE=Hotkey Window
+: ITERM_SESSION_ID=w0t0p0:AD7E7746-4D43-438A-B61C-598A30332562
+: COLORTERM=truecolor
+
+
+** Obtenir la valeur d'une variable d'environnement dans un programme
+   
+NOTE : Les variables d'environnement sont un dernier recours.
+
+*** En python
+Le module =os= nous donne un dictionnaire
+#+BEGIN_SRC python
+import os
+
+print(os.environ['NOM_VARIABLE'])
+os.environ['VARIABLE'] = 'Nouvelle_valeur'
+#+END_SRC
+
+*** En C
+
+#+BEGIN_SRC c
+#include <stdlib.h>
+
+int main(void)
+{
+    char *valeur = getenv("NOM_VARIABLE");
+}
+#+END_SRC
+
+
+
+** Installation de programmes dans son HOME
+
+*** La variable PATH
+
+La variable d'environnement =PATH= joue un rôle central en ce qui concerne
+l'installation de programmes.
+
+Lorsqu'on entre une commande, l'OS recherche un fichier exécutable sur notre
+ordinateur.  Mais pas tout l'ordinateur!  Il va rechercher dans un ensemble de
+dossiers donnés par la variable =PATH=.
+
+Cette variable est une liste de dossiers spécifiées par leur chemin absolu et
+séparés par des =:=.
+
+On peut voir son =PATH= en faisant
+
+#+BEGIN_SRC sh
+echo $PATH
+#+END_SRC
+
+Sur les ordis de Poly, la variable =PATH= contient une grande quantité de
+dossiers pour accomoder tous les programmes qui sont placés dans des entroits
+non-standards.
+
+Par contre, sur un Linux fraichement installé, on peut n'avoir que les dossiers
+
+#+BEGIN_EXAMPLE
+/bin
+/usr/bin
+/usr/local/bin
+#+END_EXAMPLE
+
+Pour mes choses personnelles, j'ajoute =$HOME/.local/bin
+
+** Choses montrées durant le premier lab de projet 1
+
+
+*** Shell de base
+*** Alias
+
+*** Git
+
+*** Gitk
+
+**** Alias pour gitk --all

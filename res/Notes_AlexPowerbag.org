@@ -1,0 +1,221 @@
+#+TITLE: Alex Lefebvre Powerbag project
+
+* Alex Lefebvre Powerbag project
+
+** Initial communication [2018-08-30 15:28]
+
+Alex messaged me saying he was looking for an electrical engineer for a project
+of his but he really needs a computer engineer that knows about arduino and
+sensors.
+
+I offered to help.
+
+He's got a bunch of ideas but the first thing he needs is to get any sensor
+hooked up to an arduino and a way to look at the data it captures.
+
+Then he can start trying different sensors and seeing what happens.
+
+
+This is the messenger conversation.  It contains things we discussed and some links
+*** Messenger conversation
+**** Opening
+*Alexandre Lefebvre*
+est-ce que tu connais quelqu'un qui a de l'expertise en génie électrique ?
+je cherche quelqu'un qui peut m'aider à prototyper un cossin avec des sensors qui vont parler à une Application
+*Philippe*
+Tes sensors existent probablement déjà. Ce que tu veux c’est qqn d’info pour
+partenter un arduino qui va écouter le sensor et parler à ton application. 
+
+**** The rest
+Et non je ne connais pas de monde en génie électrique appart Max.
+*Alexandre Lefebvre*
+est-ce que tu sais ou on achete les sensors?
+*Philippe*
+Y’a digikeys ou qqch de même.
+*Alexandre Lefebvre*
+je veux capter la force sur un punching bag
+comme le jeu quand on frappait pis la ca dit 500
+mais pour usage professionnel
+*Philippe*
+Ok alors tu veux un accéléromètre.
+Et à partir de l’accélération du bag, tu peux faire des calcula et estimer des propriétés du punch.
+*Alexandre Lefebvre*
+le bag swing constamment
+l'idée si je punch le bag 2 min
+*Philippe*
+Oui et ça rend le problème difficile
+*Alexandre Lefebvre*
+je veux avoir average power, punch per minute, individual punch stats
+*Philippe*
+Ça prend du traitement de données
+*Alexandre Lefebvre*
+v 2.0 left vs right punch
+left arm power, right arm power
+headshot
+bodyshot
+*Philippe*
+Pour que ton application soit pas mélangée par le swing dunsac
+*Alexandre Lefebvre*
+j'ai besoin d'un ingénieur electrique
+j'ai envoyé un courriel à la direction de la poly
+*Philippe*
+Tu peux aussi mettre des accéléromètres sur le poignet du boxeur aussi.
+*Alexandre Lefebvre*
+non, ca veut dire qu'il faut acheter des gants spéciaux
+*Philippe*
+Non juste un bracelet mettons
+*Alexandre Lefebvre*
+peut etre un tape spécial
+ouais un wrap spécial
+wrap les mains avant de mettre dans le boxing glove
+mais la UFC guys ont besoin d'avoir 4 shits pour leurs pieds et poings
+faut trouver comment le faire sans les sensors
+data tweaking pendant des jours
+strain gauge?
+*Philippe*
+Pour mesurer le strain dans quoi?
+*Alexandre Lefebvre*
+fuck c tough
+*Philippe*
+Tu pourrais mesurer des trucs au anchor du sac
+Avec un dynamomètre
+*Alexandre Lefebvre*
+le sac bouge
+ouais peut etre
+faudrait l'essayer
+*Philippe*
+Ce qu’il te faut c’est un sac, un sensor et un arduino.
+*Alexandre Lefebvre*
+j'ai fait une offre sur le domain powerbag.com
+*Philippe*
+Tu peux commencer avec n’importe quel sensor.  Tu vas plus savoir où tu t’en vas quand tu vas avoir récolté un peu de données. 
+
+Un arduino c’est comme 30$ et pour prototyper ça t’en prend un absolument et les sensors, ça peut couter entre 3 et 10$
+*Alexandre Lefebvre*
+je suis ouvert à toutes les idées
+est-tu game de me dire quoi acheter et en fds on joue avec ca?
+*Philippe*
+Oui ça me ferait plaisir.
+C’est quoi l’adresse courriel que tu préfères?
+Moi j’ai alex_lefebvre80@hotmail.com
+
+Est-ce que c’est encore bon?
+*Alexandre Lefebvre*
+alex.lefebvre80@gmail.com
+*Philippe*
+Et l’autre c’est pu bon?
+*Alexandre Lefebvre*
+https://martialarts.stackexchange.com/questions/6808/how-do-you-reliably-measure-your-punching-power
+je l'utilise pas activement
+il parle d'un pressure grid
+pis de heatmap
+j'aime l'idée d'une tige au milieu qui bend
+et on mesure ca
+c pas grave si ca tourne,
+*Philippe*
+C’est quelque chose à explorer.
+Le fait que ça tour n’est pas nécessairement grave pour les autres sensors.
+Mettons pour un accéléromètre, vu que ça tourne tu vas avoir des accélérations partout donc ton graphe d’acc en fonction du temps va ossiller
+Mais si ce que tu veux extraire de ces données c’est des peaks plus haut qu’une certaine valeur c’est pas grave.
+T’auras jamais de sensor qui te dit ce que tu veux
+Tu vas toujours avoir un sensor qui prend des données sur lesquelles tu fais un calcul ou un traitement pour avoir ton info.
+*Alexandre Lefebvre*
+ouais, il va falloir essai-erreur
+*Philippe*
+Exact
+Faut un punching bag, un arduino et une couple de sensors. 
+
+On hook up ça à un laptop et on punch le sac, ensuite on va voir sur le graphe d’acc ques ça a d’lair
+*Alexandre Lefebvre*
+https://www.youtube.com/watch?v=M7Oyq04lp5A
+http://www.strike-research.org/?p=p_data
+c genre une version caca de ce que j'ai en tête
+*Philippe*
+Quant t’auras ton arduino avec tes sensors programmés et que t’aimes les résultats et que ton prototype marche, là tu vas voir un ingénieur électrique pis tu lui dit « design moi une puce qui fait tout ça »
+*Alexandre Lefebvre*
+kk
+c'est comme ca
+moi ma force c'est le marketing, la vente distribution
+je vois les logos de la UFC pis des coach russes qui écrient des livres sur l'entrainement mesuré
+et comment c'Est plus efficace
+pour développer du power
+pis tous les gyms en ont,
+boxe, jiu jitsu, kickboxing
+faut mesurer toutes les manières qu'on massacre un sac
+pis que ca soit easy to read et tu peux checher tes graphs power/timeline
+*Philippe*
+Ouais, c'est intéressant.  J'pense l'important pour toi c'est de commencer
+à gosser sur des idées
+*Alexandre Lefebvre*
+j'aimerais avoir un prototype dans 3 mois, pour mettre sur kickstarter avant noel
+*Philippe*
+et voir ce que ça donne.  Exemple, accéléromère, check les données.  On peut tu dire que des peaks plus haut que tant, ça correspond à nos punchs
+*Alexandre Lefebvre*
+ouais
+http://www.martialtalk.com/threads/measure-your-punching-power.100746/
+yen a plein qui ont essayé mais c caca
+juste un sac tu connecte avec ton phone pis tas du data
+*Philippe*
+on rajoute un sensor, peut-être que certains peaks sur l'accéléromètre n'était pas des punchs, mais un peak d'accéléromètre en même temps qu'un creux dans le graphe d'un autre serait assurément un punch.
+*Alexandre Lefebvre*
+hmm... yeah
+send me the shopping list
+*Philippe*
+Aight, je vais regarder ça un peu plus tard dans la journée.
+*Alexandre Lefebvre*
+np
+je devrais travailler auss
+lo
+*Philippe*
+hehe
+*Alexandre Lefebvre*
+demain tu va a la fete a ZÉ
+?
+*Philippe*
+J'étais pas au courant
+Mais j'ai de quoi ce vendredi, c'est en soirée alors je passerai peut-être après
+*Alexandre Lefebvre*
+Ok cool
+Ichi ô
+Kkchose
+J'ai oublié attends
+*Philippe*
+J'suis sur mon ordi toute la journée, prends ton temps
+*Alexandre Lefebvre*
+Ok
+Pis le app va être comme strava
+Social networking scores etc.
+Get Mike Tyson's numbers there
+And Joshua
+Anthony Joshua's numbers McGregor etc...
+Pis la tout les kids vont en vouloir un
+*Philippe*
+Nice, j'aime l'idée
+*Alexandre Lefebvre*
+Il faut que ça marche perf.
+POWERBAG
+3:22PM
+
+*Alexandre Lefebvre*
+so I`ve been not working all day
+and I think an array of load cells stitched to the inside of the bag could produce some reliable data
+*Philippe*
+What's a load cell?
+*Alexandre Lefebvre*
+pese dessus donne un signal electronique
+https://www.smdsensors.com/products/type/load-cells-force-sensors/
+*Philippe*
+Attention, ça c'est peut-être des sensors à 500$
+Je sais pas, mais juste à voir le site, ça a d'lair de sensors que tu mets sur des machines industrielles
+*Alexandre Lefebvre*
+yen a a 500$ y'en a 60$ pis yen a a 10$
+*Philippe*
+Mais cherche sur digikeys
+*Alexandre Lefebvre*
+https://www.robotshop.com/ca/en/micro-load-cell-50-kg.html
+ok
+**Philippe**
+Attend, non, digikeys, c'est pour des pièces
+Tu viendras chez nous un soir et on fera le tour d'une couple d'affaires.
+*Alexandre Lefebvre*
+ok

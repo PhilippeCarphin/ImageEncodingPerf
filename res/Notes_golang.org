@@ -1,0 +1,140 @@
+#+TITLE: Hello world in go
+
+* Go programming language hello world
+:PROPERTIES:
+:header-args: :dir ~/Documents/GitHub/tests/Go_tests/hello_world_workspace_golang/
+:END:
+
+This is a hello world go source file, and a hello world workspace.  There
+doesn't have to be a workspace.
+
+** Install
+#+BEGIN_SRC sh :exports code
+sudo dnf install golang
+#+END_SRC
+
+#+BEGIN_SRC sh :exports both
+which go
+#+END_SRC
+
+#+RESULTS:
+: /usr/local/bin/go
+
+** Workspace
+
+#+BEGIN_SRC sh :results output :exports code
+export GOPATH=$PWD ;mkdir -p bin pkg src src/hello_dir ; touch src/hello_dir/hello_src.go ; tree
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+: .
+: ├── bin
+: ├── pkg
+: └── src
+:     └── hello_dir
+:         └── hello_src.go
+: 
+: 4 directories, 2 files
+#+END_EXAMPLE
+
+The =src= directory contains the directory =hello_dir= which contains the source file =hello_src.go=.
+
+** Source file
+This is [[file:~/Documents/GitHub/tests/Go_tests/hello_world_workspace_golang/src/hello_dir/hello_src.go][=src/hello_dir/hello_src.go=]]
+#+BEGIN_SRC go :exports code
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Printf("hello, world\n")
+}
+#+END_SRC
+save it as such and come back had run the commands.
+** Building
+
+We go into the directory for hello and we build hello
+#+BEGIN_SRC sh :results output :exports both
+export GOPATH=$PWD ; cd src/hello_dir ; go build
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC sh :results output :exports code
+tree
+#+END_SRC
+
+#+RESULTS:
+: .
+: ├── bin
+: ├── pkg
+: └── src
+:     └── hello_dir
+:         ├── hello_dir
+:         └── hello_src.go
+: 
+: 4 directories, 2 files
+
+#+BEGIN_EXAMPLE
+: .
+: ├── bin
+: ├── pkg
+: └── src
+:     └── hello_dir
+:         ├── hello_dir
+:         └── hello_src.go
+: 
+: 4 directories, 2 files
+#+END_EXAMPLE
+
+Notice that go used the name of the directory to name the executable. We run the executable:
+
+#+BEGIN_SRC sh :results output :exports both
+src/hello_dir/hello_dir
+#+END_SRC
+
+#+RESULTS:
+: hello, world
+
+** Installing
+
+Installing with =go install= will use =$GOPATH/bin= as a target:
+#+BEGIN_SRC sh :results output :exports both
+export GOPATH=$PWD ; cd src/hello_dir ; go install
+#+END_SRC
+
+#+RESULTS:
+: /home/pcarphin/Documents/GitHub/tests/Go_tests/hello_world_workspace_golang/src/hello_dir
+
+#+BEGIN_SRC sh :results output :exports code
+tree
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+: .
+: ├── bin
+: │   └── hello_dir
+: ├── pkg
+: └── src
+:     └── hello_dir
+:         └── hello_src.go
+: 
+: 4 directories, 2 files
+#+END_EXAMPLE
+
+#+BEGIN_SRC sh :results output :exports both
+bin/hello_dir
+#+END_SRC
+
+#+RESULTS:
+: hello, world
+
+
+* References
+- https://golang.org/doc/install
+- https://golang.org/doc/code.html#Workspaces
+- https://golang.org/doc/#articles
+
+* See next
+https://tour.golang.org/
+

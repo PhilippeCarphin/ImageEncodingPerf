@@ -1,0 +1,25 @@
+#+TITLE: Car Mirrors Javascritp App
+
+* Car Mirrors Javascritp App
+
+** A Javascript canvas to draw on
+
+** Sliders adjust points on the canvas
+
+** Other points are created based on the input points
+
+** Lines are drawn between various points
+
+** Zones are colored
+
+* Technical considerations
+
+** Javascript canvas
+
+** Points
+
+** Lines
+
+** Sliders
+
+** Connecting sliders and points

@@ -1,0 +1,73 @@
+#+TITLE: Wha'm I doing
+
+Anything that is here and is not a GTD-IN can be deleted without any checks.
+
+      (outline-show-all)
+      (outline-hide-sublevels 3)
+(org-set-startup-visibility)
+* Current action
+
+** Send document to guy
+
+** Setup a way to have my notes on Poly's network
+
+
+** Idea for advice shifttab
+
+Use move char command instead of goto beginning of line
+
+* Candidates
+** Sunday
+
+Upload interviews and invite each member to transcribe one of them.
+
+** Monday
+
+*** Call for appointment for Mitsubishi
+
+Just go take the car there the evening before and come back to get it the next day.
+*** Make all the calls I can
+
+** Plan this week's INF8702 course
+* Next
+
+* Past
+** GTD-DONE Write email to Mom
+   CLOSED: [2018-08-26 Sun 14:41]
+   :PROPERTIES:
+   :ID:       175E3A58-B272-4820-860A-C7F9611B8881
+   :END:
+*** DONE Make quick-access function for Mom's notes file
+    CLOSED: [2018-08-26 Sun 00:27]
+*** DONE Make notes file for Mom
+    CLOSED: [2018-08-26 Sun 00:26]
+
+
+** DONE Make sure Mom can retrieve her notes
+   CLOSED: [2018-08-26 Sun 17:22]
+
+** DONE Have her organize her files and start org-mode files for notes about these projects.
+   CLOSED: [2018-08-26 Sun 17:22]
+
+** DONE Start her on GTD
+   CLOSED: [2018-08-26 Sun 17:24]
+
+*** TODO Explain the various steps
+    :PROPERTIES:
+    :ID:       6101B478-D82B-4FC5-8BFE-7D68FB0132AF
+    :END:
+- Capture
+- Clarify
+  - Decide outcome
+- Organize
+** DONE Make notes about GTD for Alex
+   CLOSED: [2018-08-27 Mon 20:43]
+*** DONE Make a section in Notes_GTD.org
+    CLOSED: [2018-08-27 Mon 20:43]
+*** DONE Check for material from other sections
+    CLOSED: [2018-08-27 Mon 20:43]
+** DONE Make quick GTD open function
+   CLOSED: [2018-08-27 Mon 18:14]
+
+** DONE FIle the birbrier cooper thing
+   CLOSED: [2018-08-27 Mon 18:14]

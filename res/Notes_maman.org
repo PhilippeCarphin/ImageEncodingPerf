@@ -1,0 +1,155 @@
+#+TITLE: Notes concernant Maman
+
+* Questions
+* Info
+** Mots de passe
+
+Pour son application de stoquage de mots de passe.
+4 enfants en ordre croissant d'age en surnoms et abbreviations.
+
+** Organisation d'articles médicaux
+
+Maman a besoin que je scan des articles qui se trouvent dasn un sac.  Certains
+de ces articles sont disponibles en ligne sur un site de journal médical.
+
+*** Credentials for journals
+
+Note, the passwords are out of date.
+**** asds.net
+
+ These are the details fo her account
+
+***** Credentials SG
+ *login ID* : 684
+ *password* :
+
+***** Credentials MG
+ *login ID* : 458
+ *password* :
+
+***** jaad.org
+  *ID* : 000684
+  *email* : suzanne.f.gagnon@gmail.com
+  *Password* :
+
+  Des fois ils demandent un numéro spécial, c'est 42330013
+
+* First Computer Lesson
+** Things to do
+*** DONE Look at some concepts
+    CLOSED: [2018-07-29 Sun 15:15]
+    :PROPERTIES:
+    :ID:       F6B62BA3-29FF-47A8-82FD-122621390212
+    :END:
+**** DONE Understand the difference between file-data and file-abstraction
+     CLOSED: [2018-07-14 Sat 16:20]
+  [[*Understanding file-data and file-abstraction][Understanding file-data and file-abstraction]]
+
+  [[*Moving files moves the paper, not the data (WHEN POSSIBLE)][Moving files moves the paper, not the data (WHEN POSSIBLE)]]
+
+**** DONE Understand the idea of trees and paths
+     CLOSED: [2018-07-29 Sun 15:15]
+     :PROPERTIES:
+     :ID:       F64A7608-148A-47C2-A87E-4F1D59851AD0
+     :END:
+ [[*Directories][Directories]]
+
+ [[*Trees (Naturally!)][Trees (Naturally!)]]
+
+*** DONE Get started on organizing files
+    CLOSED: [2018-07-29 Sun 15:15]
+    :PROPERTIES:
+    :ID:       5466546E-0BD0-40CE-B5FE-6B6A58B0138C
+    :END:
+**** Recursive organization
+ Put everything in the right child, not in the right node.
+**** Nodes have either only folders or only files
+ Have an A_CLASSER folder to keep this true.
+*** DONE Setup dropbox
+    CLOSED: [2018-07-29 Sun 15:15]
+    :PROPERTIES:
+    :ID:       6FCBDB05-1401-4D05-AD79-EA78F56DE587
+    :END:
+**** Check the files online
+     :PROPERTIES:
+     :ID:       0BAEF30B-A07D-4C13-832C-7773C5376637
+     :END:
+
+* Org-mode basics
+
+** Folding
+
+If something ends in "..." it means there is something folded there.
+
+Tab is the fold key
+
+If something is folded tab will unfold it.
+
+** Table of contents ~ Tree
+
+Headlines, nodes, hierarchical content.
+
+Nodes.
+
+** The TODO objects
+
+Just a node whose name starts with "TODO" or "DONE".
+
+
+
+* Capturing
+
+** Inbox
+
+Transient place where you put everything that comes in. These are things that
+came in today because I talked to Mike.  He told me about a restaurant so I took
+a quick note after our conversation.  I got an email from fred asking me to
+check his code.  Write it down, keep doing what I was doing.  While searching
+stuff for work, I came across this article that looked interesting.  Note the
+reference so I can find it if I want.
+
+*** Go try out this restaurant
+Mike told me he went to this restaurant.  He thought it was really cool because.
+*** TODO Check out fred's code about a bug
+    :PROPERTIES:
+    :ID:       B7D2EC09-F0FD-48DF-A3D5-5D4FA692A684
+    :END:
+Fred emailed me about this, check out this and this.  His code is there. I think
+I need to look in this file.
+I emailed him back saying I would check it this week.
+*** An article that I read
+I read this article on whatever, it said this ... which I thought was pretty
+cool.  It was at http://abcd.com/article.
+
+
+** Categories
+
+I finished what I was doing so I'm getting back to my inbox. The restaurant
+thing goes A classer, right now I just want to do an initial triage to empty my
+inbox. I'll figure out a category.  The article goes in references done.
+
+I don't know where to file the todo about fred's code but I put it in my check
+daily list because I want to be presented with it tomorrow.  When I decide what
+to do tomorrow, I'll look at that list and I might select the fred thing and
+spend an hour on his code.
+
+*** References
+**** An article that I read
+ I read this article on whatever, it said this ... which I thought was pretty
+ cool.  It was at http://abcd.com/article.
+
+ 
+*** Check daily
+**** TODO Check out fred's code about a bug
+     :PROPERTIES:
+     :ID:       2F1D420B-A2D9-4912-A99F-FE1B07CBB194
+     :END:
+  Fred emailed me about this, check out this and this.  His code is there. I think
+  I need to look in this file.
+I emailed him back saying I would check it this week.
+
+*** A classer
+**** Go try out this restaurant
+
+
+** How to divide units

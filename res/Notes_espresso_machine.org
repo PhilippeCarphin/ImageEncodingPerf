@@ -1,0 +1,101 @@
+#+TITLE: Machine à espresso
+
+* Opération de base
+
+** Moudre du café
+
+Avec le panier pressé sur le bouton du moulin, verser tranquillement du café
+dans le réceptacle du moulin.
+
+Ceci est pour permettre l'utilisation de plusieurs sortes de café et parce que
+certains cafés sont assez dur à broyer qu'ils peuvent arrêter le moulin.
+
+** Distribuer et compacter
+
+Égaliser le café et compacter le café à l'aide du cossin.  La force à mettre est
+à peu près 30lbs, ce qui équivaut à pousser pas mal fort, mais pas trop.
+
+** Insérer le panier dans la machine
+
+Insérer le panier dans la machine.
+
+** Allumer la pompe
+
+Allumer la pompe et attendre que l'esspresso soit versé.
+
+** Éteindre la machine
+
+S'assurer que toutes les switchs sont à off.  Surtout celle pour la vapeur parce
+que sinon, la prochaine personne qui se fait un café pourrait ne pas s'en rendre
+compte et se faire son espresso avec la bouilloire en mode turbo.
+
+Ce qui résulte en un moin bon café dans le meilleur des cas et du café qui
+revolle partout dans les cas moins le fun.
+
+* Primer la machine
+
+Occasionnellement, des bulles d'air entrent dans le système de tubes de la
+machine et peuvent nuire à l'opération de la machine.
+
+Pour régler ce problème, il suffit de faire passer de l'eau dans le système de
+façon non restreinte.
+
+Sortir la tige à vapeur et mettre un ver ou autre conenant en dessous.
+
+Ouvrir la valve à vapeur.
+
+Allumer la pompe.
+
+Laisser couler l'eau jusqu'à ce qu'on ait un jet stable sans bulles d'air ou
+éclaboussures.
+
+Fermer la valve à vapeur et éteindre la pompe.
+
+Cette procédure doit être lorsque la machine n'a pas été utilisée pendant
+plusieurs jours de suite.
+
+Cette procédure doit être faite à chaque fois après utilisation de la vapeur.
+
+* Using steam
+
+Pour produire de la vapeur, activer la switch du milieu.  Lorsque la bonne
+température est atteinte, ouvrir la valve à vapeur avec un contenant en dessous
+de la tige pour vider l'eau du système.  Quand on a un bon jet de vapeur,
+refermer la valve et amener une tasse de lait.
+
+Submerger juste un peu la tige dans le lait et ouvrir la valve à vapeur.  Une
+fois le lait réchauffé et fouetté à souhait, fermer la valve à vapeur et
+*surtout* la switch pour la vapeur.
+
+Il est nécessaire de faire la procédure [[*Primer la machine][Primer la machine]] après avoir fait de la
+vapeur parce que ça met plein de bulles d'air dans le système.  Et pour assurer
+que l'intérieur de la tige n'a pas de lait.
+
+Aussi, il faut essuyer la tige de vapeur.  
+
+* Ajusting the grinder
+
+Les variables qui affectent un espresso sont
+
+| Variable     | fixe? | note                                                                                                        |
+|--------------+-------+-------------------------------------------------------------------------------------------------------------|
+| qté liquite  | oui   | La quantité cible est le volume d'un espresso double                                                        |
+| qté café     | oui   | La quantité cible est de 18g mais ma quantité, c'est un panier rempli à raz bord de café moulu non-compacté |
+| température  | oui   | La température est fixée par la machine                                                                     |
+| pression     | oui   | La pression est fixée par la machine                                                                        |
+| temps        | oui   | le temps que ça prend pour atteindre la quantité de liquide souhaitée                                       |
+| compaction   | oui   | On fait toujours la même compaction, mais le consensus est que la compaction n'a pas beaucoup d'effet       |
+| distribution | oui   | L'eau passe par le chemin le plus facile, donc on n'a pas le choix de faire attention à la distribution     |
+| mouture      | non   | Plus c'est fin, plus c'est long, moins c'est fin, moins c'est long                                          |
+| café         | non   | Le café qu'on prend, c'est sur que ça affecte le résultat.                                                  |
+
+La façon canonique d'ajuster un moulin à café est de rechercher la mouture qui
+nous donnne un temp de 25 à 30 secondes pour verser 2 onces de café avec le café
+en question.
+
+Techniquement, l'ajustement d'un moulin se fait pour un café particulier car un
+autre café moulu avec le même moulin configuré de la même façon ne versera pas
+nécéssairement dans le même temps qu'un autre café.  Mais moi, je fais juste
+mettre une coche plus fin ou moins fin si je mon café a versé trop vite ou trop
+lent.
+

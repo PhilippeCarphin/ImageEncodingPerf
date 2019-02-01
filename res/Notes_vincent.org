@@ -1,0 +1,10 @@
+#+TITLE: Montrer org-mode a vincent
+
+* Montrer org-mode a vincent
+
+#+BEGIN_SRC python
+  def vincent(allo):
+      print("allo")
+      if allo:
+          pass
+#+END_SRC

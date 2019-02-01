@@ -1,0 +1,506 @@
+#+Title: Vanillamacs
+
+* Vanillamacs
+** Config version 1
+*** Minimal file
+#+BEGIN_SRC elisp
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+#+END_SRC
+
+*** Loading a separate file
+#+BEGIN_SRC elsip
+(load-file "~/.emacs.d/my-functions.el")
+#+END_SRC
+
+*** Setting some standalone configurations
+#+BEGIN_SRC elisp
+;;; First configuration: Scroll behavior
+(setq scroll-step 1) ;; instead of the default behavior of jumping
+(setq-default scroll-margin 10) ;; Prevent the cursor from getting too close to the edges
+;;; Set startup theme
+(load-theme 'deeper-blue)
+;;; A set of miscellaneous configurations
+(electric-pair-mode 1)
+;;; make typing delete/overwrites selected text
+(delete-selection-mode 1)
+;;; make cursor movement stop in between camelCase words.
+(global-subword-mode 1)
+;;; auto insert closing bracket
+(electric-pair-mode 1)
+;;; turn on highlighting current line
+(global-hl-line-mode 1)
+;;; turn on bracket match highlight
+(show-paren-mode 1)
+;;; remember cursor position, for emacs 25.1 or later
+(save-place-mode 1)
+;;; Turn on line number mode
+(display-line-numbers-mode)
+;;; Column number in modeline
+(column-number-mode 1)
+#+END_SRC
+
+*** Having classic windows C-{z|x|c|v} behavior
+#+BEGIN_SRC elisp
+;;; Optional : Give classic C-{z|x|c|v} behavior.
+;;; (C-c and C-x are only active while text is selected so it doesn't
+;;; detract from their original emacs functions as prefixes
+;; (cua-mode 1)
+#+END_SRC
+
+*** Helm completion framework
+This requires =M-x package-install RET helm RET= to be run.
+#+BEGIN_SRC elisp
+;;; Helm
+(require 'helm-config)
+;;; This remaps some regular functions to their helm equivalent
+(helm-mode 1)
+;;; And here are a couple more
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x f") 'helm-recentf)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "M-x") 'helm-M-x)
+#+END_SRC
+
+*** Minimal additions to basic org-mode
+This requires =M-x package-install RET org-bullets RET= and =M-x package-install RET htmlize RET= to be run.
+#+BEGIN_SRC elisp
+;;; Org mode
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(require 'htmlize)
+;;; This is for xdg-open to work when doing 'C-c C-e h o'
+;;; ref : https://askubuntu.com/questions/646631/emacs-doesnot-work-with-xdg-open
+(setq process-connection-type nil)
+;;; Recenter screen when pressing shift-tab (worth it))
+(advice-add 'org-global-cycle :after 'recenter)
+;;; Define the command 'notes' to open helm-find-files in the notes directory
+(defun notes ()
+  "Open helm-find-files in a the notes directory"
+  (interactive)
+  (helm-find-files-1 "~/Dropbox/Notes/Notes_BUCKET/"))
+#+END_SRC
+
+*** Conclusion
+
+*** Important keys for exploring
+
+    Try all these keys
+| M-x     | Running commands            |
+| C-x C-e | Run expression under cursor |
+| C-h k   | Describe key                |
+| C-h f   | Describe function           |
+| C-h b   | describe-bindings  |
+Then do the tutorial with =C-h t=.
+
+Create a =~/.emacs.d= directory with a =init.el= file in it and make sure there is no =~/.emacs= file.
+
+** Temporarily taking over emacs
+The vanillamacs config lives in its own directory.
+
+Just =cd= into this directory.  Once in there call =link-pwd= and presto!
+
+The =link-pwd= utility, when called from a directory containing a
+=Linkfile=:
+#+BEGIN_SRC sh
+$HOME/.emacs           emacs
+$HOME/.emacs.d         emacs.d
+$HOME/.spacemacs       spacemacs
+$HOME/.spacemacs.d     spacemacs.d
+#+END_SRC
+will replace (and save) the links from the first column with links
+pointing to elements of the second column in =$PWD= if they exist.
+
+The tool leaves a file called =ACTIVE= to make sure it only takes
+control if that has not already been done and only restore if it was
+active.
+
+**** Taking over
+#+BEGIN_SRC sh :dir ~/Documents/GitHub/vanillamacs :results output
+link-pwd
+#+END_SRC
+
+#+BEGIN_SRC text
+REMEMBERING that there was no /home/pcarphin/.emacs file by touching .emacs.delete
+SAVING /home/pcarphin/.emacs.d as .emacs.d.restore
+LINKING /home/pcarphin/.emacs.d --> /home/pcarphin/Documents/GitHub/vanillamacs/emacs.d
+SAVING /home/pcarphin/.spacemacs as .spacemacs.restore
+SAVING /home/pcarphin/.spacemacs.d as .spacemacs.d.restore
+#+END_SRC
+
+**** Restoring
+#+BEGIN_SRC sh :dir ~/Documents/GitHub/vanillamacs :results output :exports code
+link-pwd
+#+END_SRC
+
+#+BEGIN_SRC text
+RESTORING /home/pcarphin/.emacs.d from ./.emacs.d.restore
+RESTORING /home/pcarphin/.spacemacs from ./.spacemacs.restore
+RESTORING /home/pcarphin/.spacemacs.d from ./.spacemacs.d.restore
+#+END_SRC
+
+
+
+**** Only work with links
+
+Before doing anything, the tool checks if any of the elments in the
+first column exists and is not a link.
+
+If it finds one, then it aborts to avoid doing anything that would
+overwrite real data.
+
+** Tutorials
+*** Guided tour of emacs
+
+ ref : https://www.gnu.org/software/emacs/tour/index.html
+
+**** Basic editing
+
+ Some moving and editing commands (see keys section).
+
+***** Mark
+
+ Save mark with =C-SPC=.  Some commands change the location of =mark=.
+
+***** Region
+
+ The entity =region= is defined as the stuff between =point= and =mark=.
+
+***** Killing and yanking
+
+ Killing means to copy selected text (what is called yanking in vim)
+ and yanking means to yank from the kill ring and put in the the text
+ (called putting in vim).
+
+**** Emacs server
+
+ From a running instance, run the command =start-server=, then from the
+ terminal run =emacsclient= to talk to that server.
+ #+BEGIN_SRC sh
+ emacsclient ~/Dropbox/Notes/Notes_BUCKET/Notes_emacs.org -c
+ #+END_SRC
+ With no option, opens in the current frame, =-t= creates a frame in
+ the terminal and =-c= creates an X-window frame.
+**** Keys
+
+ | Key                                    | Action                                                 |
+ |----------------------------------------+--------------------------------------------------------|
+ | C-h t                                  | Open the emacs tutorial                                |
+ |----------------------------------------+--------------------------------------------------------|
+ | C-f                                    | forward-char                                           |
+ | C-n                                    | next-line                                              |
+ | C-b                                    | backward-char                                          |
+ | C-p                                    | previous-line                                          |
+ | c-a / C-e                              | beginning/end of line                                  |
+ | M-b / M-f                              | back/forward one word                                  |
+ | M-a / M-e                              | previous/next sentense                                 |
+ | M-v / C-v                              | previous/next screen                                   |
+ | M-< / M->                              | beginning/end of buffer                                |
+ |----------------------------------------+--------------------------------------------------------|
+ | C-u 3 C-p                              | Back 3 lines                                           |
+ | C-u 10 C-f                             | Forward 10 characters                                  |
+ | M-1 M-0 C-f                            | Forward 10 characters                                  |
+ | C-u C-n                                | Forward 4 lines                                        |
+ | C-u C-u C-n                            | Forward 16 lines                                       |
+ | C-u C-u C-u C-n                        | Forward 64 lines                                       |
+ |----------------------------------------+--------------------------------------------------------|
+ | M-g g                                  | jump to line                                           |
+ |----------------------------------------+--------------------------------------------------------|
+ | C-s / C-r                              | incremental search forward/backward                    |
+ |----------------------------------------+--------------------------------------------------------|
+ | C-SPC                                  | Set mark to the current location                       |
+ | C-x C-x                                | Swap point and mark                                    |
+ |----------------------------------------+--------------------------------------------------------|
+ | C-x h                                  | Select whole buffer                                    |
+ | M-h                                    | Select paragraph                                       |
+ | C-x n n                                | Narrow buffer to the current region                    |
+ |----------------------------------------+--------------------------------------------------------|
+ | C-k                                    | kill to end of line                                    |
+ | C-u 10 C-k                             | kill 10 lines                                          |
+ | C-w                                    | Kill region                                            |
+ | M-w                                    | Save region to kill ring                               |
+ | M-d                                    | Kill next word                                         |
+ | M-k                                    | kill to end of sentense                                |
+ | C-y                                    | yank last killed text                                  |
+ | M-y                                    | Replace yanked text with previously killed text        |
+ |----------------------------------------+--------------------------------------------------------|
+ | C-/, C-_, C-x u                        | Undo                                                   |
+ |----------------------------------------+--------------------------------------------------------|
+ | C-s C-s                                | Search for most recently searched item                 |
+ | C-s M-p                                | Previous item in search history                        |
+ | C-s M-n                                | Next item in search history                            |
+ | C-h k C-s                              | Guide to more commands available in incremental search |
+ |----------------------------------------+--------------------------------------------------------|
+ | M-%                                    | Query replace                                          |
+ | C-M-s                                  | Regexp incremental search                              |
+ | C-h k                                  | Describe key                                           |
+ | C-h f                                  | Describe function                                      |
+ | C-h o                                  | Describe symbol                                        |
+ | C-h a                                  | Search for commands by keyword or regexp               |
+ |----------------------------------------+--------------------------------------------------------|
+ | M-x shell                              | Open a shell                                           |
+ | M-x compile                            | Invoke make                                            |
+ | M-x gdb                                | Invokes gdb                                            |
+ | M-x grep                               | Grep                                                   |
+ | M-x man                                | Man pages                                              |
+ | M-x calculator                         | ...                                                    |
+ | M-x calendar                           |                                                        |
+ | M-x phases-of-moon                     |                                                        |
+ |----------------------------------------+--------------------------------------------------------|
+ | M-x shell-command (M-!)                |                                                        |
+ | M-x shell-command-on-region (M-<pipe>) |                                                        |
+
+*** Official Tutorial
+
+ ref : 'C-h t' 
+
+ It mostly lists basic keys.
+
+**** Keys
+
+			   Previous line, C-p
+				   :
+				   :
+    Backward, C-b .... Current cursor position .... Forward, C-f
+				   :
+			     Next line, C-n
+ | key       | function                                 |
+ |-----------+------------------------------------------|
+ | C-v       | Move forward one screenful               |
+ | M-v       | Move backward one screenful              |
+ | C-l       | Clear screen and redisplay all the text, |
+ |-----------+------------------------------------------|
+ | M-b / M-f | forward/backward word                    |
+ |-----------+------------------------------------------|
+ | C-f       | Move forward a character                 |
+ | C-b       | Move backward a character                |
+ |-----------+------------------------------------------|
+ | M-f       | Move forward a word                      |
+ | M-b       | Move backward a word                     |
+ |-----------+------------------------------------------|
+ | C-n       | Move to next line                        |
+ | C-p       | Move to previous line                    |
+ |-----------+------------------------------------------|
+ | C-a       | Move to beginning of line                |
+ | C-e       | Move to end of line                      |
+ |-----------+------------------------------------------|
+ | M-a       | Move back to beginning of sentence       |
+ | M-e       | Move forward to end of sentence          |
+ |-----------+------------------------------------------|
+ | C-x 2     | Split window horizontally                |
+ | C-x 3     | split window vertically                  |
+ | C-x o     | switch to other window                   |
+ | C-M-v     | scroll 'other window'                    |
+ | C-x 1     | delete-other-windows                     |
+ | C-x 4 C-f | run find-file in other window            |
+ | C-x 5 2   | make-frame-command                       |
+ | C-x 5 0   | remove selected frame                    |
+
+*** Derek Banas
+**** Initial stuff in his config
+ #+BEGIN_SRC emacs-lisp
+ (package-initialize)
+
+ (require 'package)
+ (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+ (package-initialize)
+ #+END_SRC
+ After restarting emacs, you should be able to do =list-packaged= and
+ see packages for closure for example.  This would confirm that you
+ this initialization was done right.
+
+ He says to add this here because it solves a common problem.
+ #+BEGIN_SRC emacs-lisp
+ (set-keyboard-coding-system nil)
+ #+END_SRC
+**** Setting themes with interface
+
+ =M-x customize-themes= brings up a buffer that allows for setting theme with
+ an interface.
+
+**** Info
+ =C-h i= Brings up the info page
+**** Execute shell command
+ =M-x shell=
+ Bob
+ Dave
+ Alice
+ Cathy
+ With this region selected do =ESC |=
+**** Keys
+
+ | key         | function                      |
+ | C-x C-+     | increase font size            |
+ | C-x C-=     | increase font size            |
+ | C-x C--     | decrease font size            |
+ | C-s         | cycle through results of find |
+ | C-M-s       | also cycle                    |
+ | ESC <pipe>  | shell command on region       |
+ | C-x (       | start recording macro         |
+ | C-x )       | end macro recording           |
+ | C-x e       | repeat recorded macro         |
+ | C-x C-k SPC |                               |
+
+** Configurations
+
+*** Misc
+#+BEGIN_SRC emacs-lisp
+(electric-pair-mode 1)
+;; make typing delete/overwrites selected text
+(delete-selection-mode 1)
+;; make cursor movement stop in between camelCase words.
+(global-subword-mode 1)
+;; auto insert closing bracket
+(electric-pair-mode 1)
+;; turn on highlighting current line
+(global-hl-line-mode 1)
+;; turn on bracket match highlight
+(show-paren-mode 1)
+;; remember cursor position, for emacs 25.1 or later
+(save-place-mode 1)
+;; Turn on line number mode
+(display-line-numbers-mode)
+(column-number-mode 1)
+#+END_SRC
+
+*** Packages
+**** EVIL MODE RIGHT NOW
+  Evil mode is done, this is how.  This goes in your =.emacs= file.
+  #+BEGIN_SRC emacs-lisp
+    ;; This should be in any .emacs file
+    (require 'package)
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+    (package-initialize)
+    ;; This is what loads and starts evil-mode
+    (require 'evil)
+    (evil-mode 1)
+  #+END_SRC
+
+  #+BEGIN_SRC text
+    M-x package-refresh-contents
+    M-x package-install RET evil
+  #+END_SRC
+  
+  #+BEGIN_SRC text
+   house-linux  vanillamacs/   master 1m  tree emacs.d/elpa                                                                                                                                
+  emacs.d/elpa                                                                                                                                                                                 
+  ├── archives                                                                                                                                                                                 
+  │   ├── gnu                                                                                                                                                                                  
+  │   │   ├── archive-contents                                                                                                                                                                 
+  │   │   └── archive-contents.signed                                                                                                                                                          
+  │   └── melpa                                                                                                                                                                                
+  │       └── archive-contents                                                                                                                                                                 
+  ├── gnupg                                                                                                                                                                                    
+  │   ├── private-keys-v1.d                                                                                                                                                                    
+  │   ├── pubring.kbx                                                                                                                                                                          
+  │   ├── pubring.kbx~                                                                                                                                                                         
+  │   └── trustdb.gpg                                                                                                                                                                          
+  └── htmlize-readme.txt 
+  #+END_SRC
+
+  #+BEGIN_EXAMPLE
+  house-linux  vanillamacs/   master 2m ✚  tree emacs.d/elpa
+  emacs.d/elpa
+  ├── archives
+  │   ├── gnu
+  │   │   ├── archive-contents
+  │   │   └── archive-contents.signed
+  │   └── melpa
+  │       └── archive-contents
+  ├── evil-20180723.1243
+  │   ├── evil-autoloads.el
+  │   ├── evil-commands.el
+  │   ├── evil-commands.elc
+  │   ├── evil-command-window.el
+  │   ├── evil-command-window.elc
+  │   ├── evil-common.el
+  │   ├── evil-common.elc
+  │   ├── evil-core.el
+  │   ├── evil-core.elc
+  │   ├── evil-development.el
+  │   ├── evil-development.elc
+  │   ├── evil-digraphs.el
+  │   ├── evil-digraphs.elc
+  │   ├── evil.el
+  │   ├── evil.elc
+  │   ├── evil-ex.el
+  │   ├── evil-ex.elc
+  │   ├── evil-integration.el
+  │   ├── evil-integration.elc
+  │   ├── evil-jumps.el
+  │   ├── evil-jumps.elc
+  │   ├── evil-macros.el
+  │   ├── evil-macros.elc
+  │   ├── evil-maps.el
+  │   ├── evil-maps.elc
+  │   ├── evil-pkg.el
+  │   ├── evil-repeat.el
+  │   ├── evil-repeat.elc
+  │   ├── evil-search.el
+  │   ├── evil-search.elc
+  │   ├── evil-states.el
+  │   ├── evil-states.elc
+  │   ├── evil-types.el
+  │   ├── evil-types.elc
+  │   ├── evil-vars.el
+  │   └── evil-vars.elc
+  ├── gnupg
+  │   ├── private-keys-v1.d
+  │   ├── pubring.kbx
+  │   ├── pubring.kbx~
+  │   └── trustdb.gpg
+  ├── goto-chg-20180105.1833
+  │   ├── goto-chg-autoloads.el
+  │   ├── goto-chg.el
+  │   ├── goto-chg.elc
+  │   └── goto-chg-pkg.el
+  ├── htmlize-readme.txt
+  ├── undo-tree-0.6.5
+  │   ├── undo-tree-autoloads.el
+  │   ├── undo-tree.el
+  │   ├── undo-tree.elc
+  │   └── undo-tree-pkg.el
+  └── undo-tree-0.6.5.signed
+  #+END_EXAMPLE
+
+**** Recentf
+
+  #+BEGIN_SRC emacs-lisp
+  (require 'recentf)
+  (recentf-mode 1)
+  #+END_SRC
+
+  Use =recentf-open-files= to get a recent files buffer.
+**** Helm
+   
+  Do =M-x package-install RET helm= and add this to the =init.el=
+   
+  #+BEGIN_SRC emacs-lisp
+  (require 'helm-config)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-x f") 'helm-recentf)
+  #+END_SRC
+
+  Helm's thing is that it has its versions of existing function so we can take keys like =C-x b=, it is bound to switch-to-buffer.
+
+  Doing =M-x helm- TAB= we look in the =helm-buffers= part and see =helm-buffer-list=
+
+  #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-x b") 'helm-buffers-list)
+  #+END_SRC
+
+  There is also the =helm-M-x= function that is really nice too.
+  #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  #+END_SRC
+
+  Otherwise, doing this will do this helm replacement for a bunch of functions.
+  #+BEGIN_SRC emacs-lisp
+  (helm-mode 1)
+  #+END_SRC
+
+
+  (helm-find-files "~/Dropbox/Notes/Notes_BUCKET/*")
+** Cool keys or functions
+*** Eval buffer =M-x eval-buffer|eval-region=

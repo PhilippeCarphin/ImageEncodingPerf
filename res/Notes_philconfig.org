@@ -1,0 +1,37 @@
+#+TITLE: Philconfig
+
+* Philconfig
+
+** source $PHILCONFIG/FILES/functions
+
+=cmc_normal_mode=
+=gitignore=
+=emacs_switch_mode= (spacemacs or vanillamacs)
+=check_quota=
+
+** source $PHILCONFIG/FILES/general-aliases
+
+lprofile
+
+alias gitk="gitk --all --select-commit=HEAD &"
+alias less='less -R'
+alias pathpwd='export PATH=$PWD:$PATH'
+alias ln='ln -v'
+alias dusage="du -d 1 -h | sort -h"
+alias my-ip='curl ipinfo.io/ip'
+    source $PHILCONFIG/Templates/.template-completion.bash
+    source $PHILCONFIG/FILES/git-completion.bash
+    source $PHILCONFIG/FILES/git-prompt.sh
+    source $PHILCONFIG/FILES/git-prompt-phil.sh
+** source $PHILCONFIG/CMC/aliases.sh
+
+    alias buildspoo="cd ~/hall1_phil/spooki/build"
+    alias tmuxspi='tmux new-session \; source-file ~/spi-dev.tmux'
+    alias runxp='echo "$(tput setab 3)No \"$\" or \"#\" after password$(tput sgr 0)" && nohup rdesktop -g 840x525 eccmcwts3 -d ECQUEBEC -u CarphinP &'
+
+    fs3=/fs/cetus3/fs3/cmd/s/afsm/pca
+    alias fs3='cd $fs3'
+
+    if [[ $(hostname) == *ppp* ]] ; then
+       alias make='echo "$(tput setab 1)$(tput setaf 15)Do not run make on PPP$(tput sgr 0)"'
+    fi

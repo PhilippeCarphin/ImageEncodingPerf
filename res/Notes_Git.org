@@ -1,0 +1,510 @@
+#+TITLE: Notes about Git
+
+* Notes about Git
+
+** My GitHub Projects
+
+*** Current
+**** link-pwd : quick tool for making links
+**** repo-manager : tool for doing things on multiple repos.
+**** philconfig : my configs
+**** vanillamacs : spacemacs-less experimentation
+**** env-analyser : python tool for checking environment
+**** tests :
+***** Python : decorators, annotations, introspection
+
+** Ignoring changes to tracked files
+
+Found on https://wildlyinaccurate.com/git-ignore-changes-in-already-tracked-files/ 
+
+#+BEGIN_SRC sh
+git update-index --assume-unchanged <file>
+#+END_SRC
+
+#+BEGIN_SRC sh
+git update-index --no-assume-unchanged <file>
+#+END_SRC
+*** Notes
+
+This affects =git add -A= and =git add .= and =git commit -a=.
+
+This affects the server *with some footnotes*
+- I'm not sure how it works because I tested adding a file, marking as
+  --assume-unchanged, pushing to GitHub.  Then from a tmpdir, cloning and
+  modifying the file to see if status would show it.  Status didn't show it.
+
+*** Useful for
+
+- A file that doesn't need to come with the repository but it would be nice if
+  it did.
+  - Example: The org-mode manual for a tool
+
+    It is the tracked file and the generated manual is generated from it.
+ 
+    so it doesn't need to be tracked. But if someone can't export an org file to
+    man, they can't get the man file.
+
+    The solution is to add the man file to git but make it --assume-unchanged.
+    
+    I modify the org-mode file and make commits as I do.
+
+    After enough changes, make a commit on the man file.
+
+- A database file that might need to be tracked and only commited occasionaly.
+
+* Notes sur libgit2
+Aussi, quelque chose qui pourrait être intéressant : libgit2 est une
+réimplémentation en C des fonctionnalités de git sous forme de librairie
+dynamique avec des bindings pour python et tous les autres langages
+non-esotériques.  J’ai un script python qui utilise ça pour mettre de l’info git
+dans mon prompt string sans spawner dix-mille processus.  Puisqu’on ne l’a pas
+ici, j’utilise mon ancienne version en BASH pure qui est pas mal dégueux à
+regarder et pas mal plus lente.  Je sais que maestro interagissait avec git, et
+probablement que d’autres outils font des actions git.  GitHub, GitLab, Git
+kraken et la plupart des outils connus comme pycharm, visual studio, etc
+utilisent cette librairie pour interagir avec des entrepôts git.
+
+C’est probablement quelque chose que si les développeurs ici l’avaient, ils
+pourraient l’essayer pour leurs affaires, mais s’ils ne l’ont pas, ils vont se
+contenter d’écrire des scripts BASH alors qu’ils auraient pu écrire un script
+python beaucoup plus clean, réutilisable comme module python etc… tu vois
+l’idée.  Considérons ceci:
+#+BEGIN_SRC python
+if git status | grep “up to date” ; then  # J’espere que t’as pas de fichier qui
+                                          # s’appelle ‘up to date’
+   Repo_is_dirty=true                     # (la chaine de caracteres “true”,
+                                          # pas la commande true : beurk)
+fi
+#+END_SRC
+
+Avant que je connaisse =libgit2=, mes scripts étaient remplis de hacks ou je
+parse le output d'une commande git avec grep, sed, awk, toute la patante
+et réaliser que si j'ai un fichier qui match un regexp que j'utilisais pour
+quelque chose, ça confond mon script.
+
+A la place, on peut avoir un vrai API git
+#+BEGIN_SRC python
+def is_dirty(repo)
+   my_st = my_status(repo)
+   return self.status['modified'] or self.status['new']
+
+def my_status(repo)
+   """ Returns a dictionary containing the list of tracked modified files and
+   the list of untracked files """
+   st = repo.status()
+   mod = []
+   new = []
+   for filepath, flags in st :
+      if flags in [GIT_STATUS_WT_MODIFIED, GIT_STATUS_INDEX_MODIFIED]:
+         mod.append(filepath)
+      elif flags in [GIT_STATUS_WT_NEW, GIT_STATUS_INDEX_NEW]:
+         new.append(filepath)
+   return {'modified':mod, 'new':new}
+#+END_SRC
+
+et si j'ai une autre question que je me pose sur mon entrepôt qui aurait
+normalement besoin que j'exécute git status encore, je ne suis pas obligé de
+faire.
+
+#+BEGIN_SRC python
+class RepoWrapper:
+   def __init__(self, directory):
+      self._repo = pygit2.Repository(os.path.join(directory, '.git'))
+      self.status = my_status(self._repo)
+
+   def refresh(self):
+      self.status = my_status(self._repo)
+
+   def dirty(self):
+      return self.status['modified'] or self.status['new']
+
+   def clean(self):
+      return not self.dirty()
+#+END_SRC
+
+Oups, je veux savoir s'il y a des fichiers ignorés, je peux le faire sans
+le nombre d'appels à status()
+
+#+BEGIN_SRC python
+def my_status(repo)
+   """ Returns a dictionary containing the list of tracked modified files and
+   the list of untracked files """
+   st = repo.status()
+   mod = []
+   new = []
+   ign = []
+   for filepath, flags in st :
+      if flags in [GIT_STATUS_WT_MODIFIED, GIT_STATUS_INDEX_MODIFIED]:
+         modified.append(filepath)
+      elif flags in [GIT_STATUS_WT_NEW, GIT_STATUS_INDEX_NEW]:
+         new.append(filepath)
+      elif flags in [GIT_STATUS_IGNORED]:
+         ign.append(filepath)
+   return {'modified':modified, 'new':new, 'ignored':ign}
+#+END_SRC
+
+c'est pas mal plus de code si tu voulais juste savoir si le output de git
+contenait la chaine de caractères "up-to-date", mais si la question était de
+savoir si l'entrepôt est clean, pas de fichiers untracked, pas de fichiers
+modifiés, ça ressemblerait plus à ceci dans BASH
+#+BEGIN_SRC python
+if ! [ -z "$(git ls-files $g/.. --others --exclude-standard 2>/dev/null)" ] ; then
+     _git_ps1_phil_has_untracked=true
+fi
+
+if ! git diff --no-ext-diff --quiet --exit-code 2>/dev/null ; then
+     _git_ps1_phil_has_unstaged_changes=true
+fi
+
+if ! [ -z $_git_ps1_phil_headless ] ; then
+     state=headless
+elif [ -z $_git_ps1_phil_has_unstaged_changes ] && [ -z $_git_ps1_phil_has_staged_changes ] ; then
+     state=clean
+else
+     state=dirty
+fi
+#+END_SRC
+
+Avec le code BASH ci-haut, mon code python pour savoir si mon repo est propre
+commence à avoir l'air pas mal plus élégant que le code bash.
+
+Hey pis si j'ai plusieurs entrepôts, n'est-ce pas un peu ridicule que pour que
+mon programme puisse obtenir des infos sur cet entrepôt, je dois changer de
+PWD pour ça?  Si j'ai un programme en C qui, dans son exécution, utilise un
+outil, je suis obligé de faire
+
+#+BEGIN_SRC c
+enum MyGitToolCode { A, B, C };
+
+enum MyGitToolCode get_some_info(char *directory_of_repo, int some_flag)
+{
+   char *cmd;
+   char *some_option_arg
+   sprintf(cmd, "cd %s ; my_git_tool.sh", directory_of_repo);
+   switch(some_flag)
+   {
+      case FLAG1: some_option_arg="flag1"; break;
+      case FLAG2: some_option_arg="flag2"; break;
+      default: error or something; break;
+   }
+   sprintf(cmd, "-some-option %s ", some_option_arg);
+   return WEXITSTATUS(system(cmd));
+}
+#+END_SRC
+
+C'est pas la fin du monde, mais maudit que ça me gosse de faire des sprintf
+pour construire une commande quand je peux juste faire des appels de fonctons
+librairie.
+
+Si my_git_tool.sh est pas à moi mais je veux l'utiliser, j'aime bien mieux
+regarder ce que ça fait et le refaire en C sous-forme d'une librairie
+dynamique.
+
+Mais Phil, ta librairie partagée peut pas remplacer my_git_tool.sh parce que
+les utilisateurs doivent pouvoir l'appeler de la ligne de commande.  Ben ma te
+faire un main.c que je vais compiler en linkant avec la lib.  Ma juste copier
+coller ta section getopt et l'adapter à la syntaxe du C, en plus le
+getopt_long() de glibc est ben meilleur que le getopt de BASH, les arguments
+positionnels peuvent aller n'importe où puisque getopt permute les arguments
+plutôt que juste les shifter.
+
+Avec un template comme https://github.com/PhilippeCarphin/c-template 
+
+c'est seulement un un 5-10 minutes à suivre des instructions bien précise pour
+une prendre une librairie dynamique et en faire un outil en ligne de commande.
+
+On sacre la lib dans =/usr/lib64= ou qqch de même, ensuite, on clone le template
+et on adapte les options, et on implémente les commandes à l'aide des
+fonctions de la lib.  Compile et link et on bounce l'exécutable dans
+=/ssm/cetus/ops/cmoi/ssm/ubuntu_18_x64/bin/cmod/dor/my_git_tool=
+
+Ah et aussi, mon template donne gratuitement une extension python et une
+extension TCL.  Les extensions utilisent la même interface que la ligne de
+commande car sinon, il y aurait du travail à faire.  Mais on peut partir de là
+et modifier le code d'extension python ou le code de l'extension TCL pour avoir
+une interface qui fonctionne avec le langage en question.
+
+Pour TCL, c'est déjà suffisant puisque la syntaxe de commandes TCL s'y prête
+bien mais pour python, c'est un peu painful d'avoir à passer des listes de
+chaines de caractères plutôt que des vrais arguments.
+
+Autre note: t'as un outil en ligne de commande que tu veux transformer en
+extension TCL?  Passe moi ça et je vais te l'arranger.  Ça te gosse qu'à
+chaque fois que tu veux savoir quelque chose sur un noeud, t'es obligé de
+spawner un process qui prend le path, lis plein de fichiers xml, rempli un
+paquet de champs d'un NodeDataPtr, et print la valeur du champ que t'as demandé
+à la console...
+
+Oups, tu veux un autre champ de ce même noeud?  Attend, laisse moi spawner un
+process, prendre le même path, parser les mêmes fichiers xml, et printer la
+valeur de cet autre champ.
+
+Est-ce qu'on peut faire une extention TCL avec, par exemple, nodeinfo?  Ben
+mets-en!  La seule chose à vérifier, c'est qu'on n'a pas de fuites de mémoire
+mais Phil a éliminé les fuites de mémoire de nodeinfo, de sorte que quand un
+appel à la fonction nodeinfo retourne, toute mémoire allouée a été désalouée.
+
+Mais Phil, quelles seraient les étapes pour prendre nodeinfo et en faire une
+extension TCL?
+
+    - Prendre le fichier =tcl_extension.c= du projet à Phil ainsi que =options.c=
+       =options.h=, les renommer à =tcl_nodeinfo.c=, =nodeinfo_options.c=,
+       =nodeinfo_options.h=
+
+    - Changer la struct.  Chaque argument de la struct est un paramètre de la
+       fonction nodeinfo.  Éditer nodeinfo_options.{.h,.c} pour faire un peu
+       le même travail que la fonction nodeinfo_main fait (on peut pas mal
+       copier-coller son contenu mais modifier pour que ça change les champs
+       de la struct plutôt que des variables locales.
+
+    - Changer la fonction dans tcl_extension.c pour qu'elle fasse
+
+       nodeinfo(opts->nodepath, opts->asdf, opts->hjkl, ...)
+
+    - Rajouter une cible au makefile
+          nodeinfo_ext
+
+    - Écrire un fichier test.tcl qui va loader la librairie dynamique générée
+       et faire quelques appels et comparer au résultat attendu.  Le résultat
+
+       load thelibfile.so
+       nodeinfo nodepath asdf_value hjkl_value
+       
+       Probablement que nodeinfo_main() prend la valeur de retour de nodeinfo
+       et print quelque chose à la console.  Nodeinfo() produit un NodeDataPtr
+       et nodeinfo_main() print un champ de ça à la console.
+
+       Notre commande TCL, à la place, va faire Tcl_SetObjResult.
+    
+    - Erreurs.  Puisque maestro utilise la stratégie print-and-die pour gérer
+       les erreurs, c'est difficile de l'utiliser comme librairie puisque si
+       le processus appelle exit() ou abort() c'est pas juste la librairie
+       qui termine, c'est le process au complet, incluant l'interpréteur TCL
+       et l'environement wish.
+       Ça veut dire que pour qu'une telle chose soit possible, toutes le
+       fonctions qui appelent raiseError() doivent devenir des fonctions qui
+       retournent un code d'erreur.
+       Toutes les fonctions qui appellent ces fonctions doivent être modifiées
+       pour qu'elles vérifient ce code d'erreur et qu'elles gèrent ces
+       erreurs.
+
+       Si une fonction ne peut pas gérer l'erreur, elle doit elle aussi être
+       modifiée pour retourner un code d'erreur et toutes les fonctions qui l'
+       appellent doivent être modifiées pour vérifier ce code et gérer les
+       erreurs le cas échéant.
+
+* Planification Vidéos sur git
+
+** Anes
+*** Comment annuler un commit.
+*** Intérêt d'utiliser git
+*** Branches
+*** Quantité minimales et maximales de changements méritant un commit
+*** Stash
+*** Working Directory, Index (staging area)
+*** Comment annuler un commit (soft)
+
+** Antwo Chaffdeux
+
+*** Résoudre des conflits
+*** Extra
+**** Qu'est-ce qui cause des conflits
+(Le fait de modifier le même fichier n'engendre pas nécessairement des conflits)
+
+*** Jean-Alexandre Barszcz
+
+**** Option -p
+
+*** Other topics
+
+**** Git culture and the command line
+
+Comme toute sphère d'activité, il y a une culture de git qui vient avec des
+moeurs.
+
+Une d'entre elles est qu'il est mal vu d'utiliser des interfaces graphiques pour
+faire des actions avec git.
+
+La raison pour ça est que les gens aiment travailler avec des collègues qui
+utilisent git correctemnt.  Si je vois quelqu'un utiliser Git Kraken, je vais
+penser que cette personne ne connaît pas bien git (Don't get me started on why
+Git Kraken sucks).
+
+L'autre raison et la plus importante pour vous est que ça vous cache des choses
+qui vous auraient permis de mieux comprendre git.
+
+Enfin, quand on connaît bien git, on peut utiliser une interface graphique pour
+sauver du temps (mais pas pour faire quelque chose qu'on sait pas comment faire
+en ligne de commande).
+
+Moi j'utilise git gui.  Un étudiant a vu ça et connaissant la culture de git,
+s'est permi de se mettre au dessus de moi en disant que, lui, n'utilisait pas de
+GUI.
+
+Je lui ai répondu que je sais exactement les commandes git qui sont causées par
+mes clicks dans l'interface graphique.  J'en ai aussi profité pour lui demander
+s'il savait c'est quoi un "rebase interactif" pour me remettre au desssus de lui.
+
+
+** Florence C Paquet
+*** uniformité des commits:
+Faciliter le travail en équipe et mieux comprendre chaque commit lorsque les autres travaillent sur le projet
+
+*** utilisation du stash:
+Pas très bien expliqué et utile pour les futurs cours de projets
+
+*** création de branches et les merge:
+
+Meilleure division du travail, uniformité dans les branches (p. ex. Chaque branche = une tâche), éviter de « bousiller » le master
+
+*** résolution des conflits:
+
+meilleure compréhension des problèmes survenus et comment les régler/les éviter, récupérer une ancienne version d’un fichier
+
+*** introduction des différents services git offerts:
+Dire qu’il existe github, gitLab, gitKraken, etc. pour créer des projets au lieu de d’utiliser google drive ou de s’envoyer des zip
+
+* Guide sur Git
+
+** Pourquoi git
+
+*** Sans git
+
+**** Sauver des versions nous-mêmes
+
+**** Problèmes avec cette approche
+
+** Concepts
+
+*** Differentes places
+Quelques points de vocabulaire sont importants au début
+**** Projet/Entrepôt
+Au sens large, un *projet* ("project") signifiera simplement un dossier contenant quelque
+chose sur lequel on travaille.  On dira qu'un *entrepôt* ("repository" ou "repo") est un
+projet géré par *git*.
+**** Working directory
+Le dossier de votre "repo" contient les fichiers de votre projet et un dossier
+=.git=.  Le "working directory" ou "working tree" c'est simplement les fichiers
+qui sont dans votre dossier (excluant le =.git=).
+**** Index/Staging area/History
+L'*index* ou le "*staging area*" est l'ensemble des fichiers qui ont étés
+marqués pour être dans le commit en préparation.
+
+Même si on dit des choses comme "dans l'index" ou "in the staging area", ce
+n'est pas un emplacement sur le système de fichiers, c'est plutôt un ensemble de
+changements qui ont été marqués comme allant faire partie du prochain commit.
+
+*** L'objet commit
+
+Un commit est comme un "snapshot" de votre entrepôt avec des informations
+supplémentaires attachées.  Ces informations sont notamment
+- Message de commit
+- Date du commit
+- Nom de l'auteur du commit
+- Courriel de l'auteur
+- *Référence au snapshot précédent* (Appelé le *parent*)
+- Le snapshot lui-même
+- *Hash md5 du commit*
+
+En pratique, le commit ne contient pas un snapshot complet (ceci demanderait
+trop d'espace).  Plutôt que d'enregistrer une copie complète du projet, git
+enregistre dans l'objet commit seulement les changements par rapport au snapshot
+précédent.
+
+Ceci est un *détail d'implémentation*.  On peut voir un commit comme
+représentant un snapshot de notre entrepôt.
+
+*** Le graphe de commits
+    
+Puisque chaque commit a une référence vers son parent, ceci fait en sorte que
+l'ensemble des commits et de leurs références aux parents forment *un graphe
+dirigé* (dirigé parce que les parents connaissent leurs enfants mais pas
+l'inverse).
+
+Notez que les branches dans git sont un concept séparé du graphe de commits.
+*** Branches
+
+*Soyez bien attentifs ici*.  Une branche ne signifie pas un *Y* dans le graphe
+de commits.  Lisez ce qui suit bien comme il faut:
+
+/Une branche dans git n'est rien d'autre qu'un pointeur sur un commit qui peut
+bouger lorsqu'on effectue certaines opérations./
+
+*** Le dossier .git
+
+On ne devrait jamais regarder dans ce dossier mais ça peut être intéressant de
+voir ce qu'il y a.
+
+**** Les branches
+
+.git/refs/heads
+
+Par exemple, =.git/refs/heads/master= est un fichier texte qui contient le hash
+du commit que master pointe.
+
+**** Les commits
+
+.git/objects
+
+Les données vivent là mais ces données sont enregistrées en format binaire et
+sont complètement opaques pour nous.
+
+**** Les hooks
+
+Si on veut que certaines actions /de notre choix/ soient faites avant ou après
+des opéraitons git, on peut mettre des scripts bash dans le dossier
+=.git/hooks/=.  Le nom du fichier désigne quand exécuter ce script.
+
+Un exemple serait de rouler un "linter" avant chaque commit.
+
+Git va regarder le code de retour du script et annulera l'opération pour le cas
+des "hooks" qui roulent /avant/ l'opération.
+
+*** Changements vs snapshots
+
+On a deux façons de voir un commit.
+
+
+** Commandes
+
+*** Basic
+**** Checkout
+
+La commande checkout nous permet de sauter d'un commit à l'autre.  Lorsqu'on
+fait un checkout d'un commit, git va mettre notre "working tree" à l'état du
+snapshot représenté par le commit.
+
+#+BEGIN_SRC sh
+git checkout $reference_a_un_commit
+#+END_SRC
+
+Et =reference_a_un_commit= peut être soit le hash du commit ou une référence à
+un commit comme une branche ou un tag.
+
+Il existe aussi d'autres mécanismes pour spécifier un commit.  Par exemple
+=master^= veut dire le commit qui est le parent du commit pointé par la branche
+master.
+
+**** Add
+
+C'est la commande qui est utilisée pour préparer des commits.  Git nous offre un
+contrôle très fin sur la façon dont on crée des snapshots.
+
+**** Commit
+
+*** Avancées
+
+
+** Outils
+
+*** Gitk
+
+
+*** Git Gui
+
+** Bonne pratiques
+
+*** Faire des bons commits
+
+
+** Procédures

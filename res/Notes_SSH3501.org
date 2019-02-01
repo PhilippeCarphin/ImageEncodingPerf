@@ -1,0 +1,343 @@
+#+TITLE: Éthique de l'ingénieur (AUT2018)
+
+** Éthique de l'ingénieur (AUT2018)
+
+
+*** Courses
+
+**** Cours 1
+
+ Parlé un petit peu.  Le prof s'est présenté.  Il nous a parlé du plan de cours.
+
+ Le chargé de cours a fait sa maîtrise dans un sujet environnemental.  La
+ question était est-ce que les générations futures ont des droits.  Légalement
+ non, et je ne sais pas quelle a été la conclusion de ses recherches.
+
+ Il a parlé de Eichmann et un article sur lui par Hannah Arendt.  Son affaire
+ c'était d'être un genre d'ingénieur qui travaillait sur les douches de poison ou
+ qqch.  L'idée c'est que c'est comme un dude ben normal.
+
+ Le point était que le dude aurait du refuser de travailler pour cet affaire là
+ et que les ingénieurs ont eux aussi le devoir de ne pas travailler sur des
+ choses sont pas dans le meilleur intérêt du public.
+
+ ==
+
+***** A moment donné sur l'avauglement volontaire 
+ #+BEGIN_QUOTE
+ Nous sommes tous des S.S. de l'écolocauste.
+ -- Le prof d'éthique
+ #+END_QUOTE
+
+*** Course 2 <2018-09-04 Tue>
+**** Code des professions
+ But: Protection du public
+
+ Premier concept: Autonomie
+ - Autorégulation
+ - Autogestion
+ - Autodiscipline
+**** Définition d'un professionnel
+ Quelqu'un qui ne peut être évalué que par un pair.
+ Pose des actes ... (see slides)
+**** Exersice exclusif et titre réservé
+**** Loi particulière
+**** Critères de formation d'un ordre
+ - Degré d'autonomie
+ - Caractère personnel
+ - Confidentialité entre le client et le professionnel
+**** Code déontologique
+**** Loi sur les ingénieurs
+**** Ordre des ingénieurs du Québec
+ - Rôle
+ - Mission
+ - Activité générale
+ - Activité particulière
+**** Organigramme dans les slides sur les différentes parties de l'OIQ
+**** 4 valeurs de la profession
+ - Compétence
+ - Sens de l'éthique
+ - Responsabilité
+ - Engagement social
+**** CIP
+**** Parcours du code de déontologie
+ *NOTE* Les slides ont des "surnoms" pour certaines clauses et des commentaires
+  qu'on ne peut déduire des clauses elles-mêmes.
+**** Travail en équipe
+ On a jasé et trouvé quelques articles pour les deux situations et on a jet.
+***** Membres de l'équipe
+
+ | Carphin, Philippe | 1693091 |
+ | Achkanou, Hajar   | 1839868 |
+ | Anhoury, Marc     | 1846809 |
+ | Bélanger, Mathieu | 1850591 |
+ | Labbé, Francis    | 1799954 |
+
+*** Course 3 <2018-09-11 Tue>
+*** Course 4 <2018-09-18 Tue>
+
+*** Consignes T1 (Sujet - Plan)
+
+ Deadline is 25 sept
+
+ Deadline is 18 sept
+
+ Style APA doit être utilisé w- (Important part is that quoting is done with
+ (Malherbe 2012) instead of [3] which doesn't say anything)
+
+ Prendre position spontanée
+
+** Éthique de l'ingénieur (HIV2019)
+
+*** Cours
+
+**** Cours 1 <2019-01-08 Tue>
+
+Aucune matière, seulement présentation de plan de cours
+
+Je suis allé voir le prof au début pour lui dire salut et confirmer qu'il n'y
+avait pas de nouvelle matière.
+
+**** Cours 2 <2019-01-15 Tue>
+:PLAN:
+Cours 2 15/01
+
+Contenu de la séance : Éthique et normativité
+Qu’est-ce iqu’une norme ? Les différents types de normes
+Etude de cas non évaluée
+
+Suggestions : Film : Les yeux dans le ciel (Eye in the sky) Pièce de théâtre : Antgone de Sophocle
+:END:
+
+**** Cours 3 <2019-01-22 Tue> 
+
+Normes and stuff
+
+Étude de cas évaluée.  Une chance qu'Adam est dans l'équipe!
+
+**** Cours 4 <2019-01-29 Tue>
+**** Cours 5 <2019-02-05 Tue>
+**** Cours 6 <2019-02-12 Tue>
+**** Cours 7 <2019-02-19 Tue>
+**** Cours 8 <2019-02-26 Tue>
+**** Cours 9 <2019-03-05 Tue>
+**** Cours 10 <2019-03-12 Tue>
+**** Cours 11 <2019-03-19 Tue>
+**** Cours 12 <2019-03-26 Tue>
+**** Cours 13 <2019-04-02 Tue>
+**** Cours 14 <2019-04-09 Tue>
+
+*** Travail de session
+
+**** Sujet : Cambridge Analytica
+
+- Le main engineer de Cambridge Analytica et sa team 
+
+**** Sources 
+***** New York Times : How Cambridge Analytica Exploited the Facebook Data of Millions
+
+***** The Guardian (YouTube)
+https://www.youtube.com/watch?v=FXdYSQ6nu-M
+
+
+***** The Guardian (Article)
+https://www.theguardian.com/technology/2018/mar/17/facebook-cambridge-analytica-kogan-data-algorithm
+
+***** NewYorkTimes (article)
+https://www.nytimes.com/2018/03/17/us/politics/cambridge-analytica-trump-campaign.html
+
+***** Forbes
+https://www.forbes.com/sites/jeffkauflin/2018/10/01/former-cambridge-analytica-research-director-chris-wylie-explains-how-to-manipulate-peoples-minds/#156b75a4c768
+
+***** C-span (hearing with C. Wylie and others)
+
+https://www.c-span.org/video/?445621-1/cambridge-analytica-whistleblower-christopher-wylie-testifies-data-privacy
+
+- 29:25 -> Wylie : "To be clear, the work of Cambridge Analytica is not
+  equivalent to traditional marketing.  Cambridge Analytica specialized in
+  disinformation, spreading rumors, 
+
+***** full text
+
+THANK YOU FOR YOUR ATTENTION TO THE SUBJECT MATTER AND I WELCOME YOUR QUESTIONS.
+>> OK. HOW IS THAT? MR. CHAIRMAN, SENATORS, THANK YOU FOR THE OPPORTUNITY TO
+SPEAK TODAY. CAMBRIDGE ANALYTICA IS THE CANARY IN THE COAL MINE. WE MUST ADDRESS
+THE DIGITAL ECHO CHAMBERS THAT ARE BEING EXPLOITED TO ALGORITHMICALLY SEPARATE
+AMERICAN SOCIETY. ONLINE COMMUNITIES SHOULD UNITE US. DATA IS THE NEW
+ELECTRICITY OF OUR DIGITAL ECONOMY. JUST LIKE ELECTRICITY, WE CANNOT ESCAPE
+DATA. ONLINE PLATFORMS PRESENT USERS WITH A FALSE CHOICE, BECAUSE USING THE
+INTERNET IS NO LONGER A CHOICE. AMERICANS CANNOT OPT OUT OF THE 21ST CENTURY.
+ALL REVOLUTIONS THROUGHOUT -- REQUIRE NEW POWER STRUCTURES. AMERICAN REVOLUTION
+REQUIRED THAT CITIZENS ARE PROTECTED FROM THE GOVERNMENT. THE INDUSTRIAL
+REVOLUTION REQUIRED PROTECTIONS FOR WORKERS AGAINST CONDITIONS IN THE WORKPLACE
+AND ENVIRONMENT. SO, TOO, WITH THE DIGITAL REVOLUTION MUST BE RELIES THAT THERE
+IS A NEW GAME BEING PLAYED AND THAT THE RIGHTS TO LIFE, LIBERTY, AND THE PURSUIT
+OF HAPPINESS WE NEED TO BE DEFENDED FROM THOSE WHO MIGHT UNDERMINE THEM USING
+NEW TECHNOLOGIES, WHETHER THEY ARE CORPORATIONS, WHETHER THEY ARE NATIONS, OR
+NONSTATE ACTORS. I HAVE COME HERE TODAY VOLUNTARILY AS A WITNESS AND AS A
+WHISTLEBLOWER. I HAVE ALREADY REPORTED THESE MATTERS TO THE 30'S AND IT SHOULD
+BE MADE CLEAR I'M NOT A TARGETED PART OF THE INVESTIGATION. I WAS A DIRECTOR OF
+RESEARCH AT CAMBRIDGE ANALYTICA FROM MID-2013 TO LATE 2014. FCL GROUP WAS A
+BRITISH MILITARY CONTRACTOR SPECIALLY -- CAMBRIDGE ANALYTICA WAS CREATED TO
+ALLOW FCL TO WORK IN THE U.S. CAMBRIDGE ANALYTICA DOES NOT HAVE ANY EMPLOYED
+STAFF AND ALL CLIENTS WERE HANDLED I FCL, ALTHOUGH LAWYERS WERE WEREN'T --
+WARNED ABOUT USING FOREIGN CITIZENS, THEY EMBED NON-US CITIZENS IN AMERICAN
+CAMPAIGNS. CAMBRIDGE ANALYTICA OFFERED VOTER DISENGAGEMENT SERVICES IN THE U.S.
+, AND THERE ARE INTERNAL DOCUMENTS I HAVE SEEN THAT MAKE REFERENCE TO THIS
+TACTIC. MY UNDERSTANDING IS THAT THIS WAS TARGETED AT AFRICAN-AMERICAN VOTERS.
+WHEN I WAS AT CAMBRIDGE ANALYTICA, I WAS ALSO MADE AWARE OF THE BLACK OPS
+CAPACITY. I HAVE SEEN DOCUMENTS RELATING TO INSTANCES WHERE THE FIRM SOUGHT TO
+PROCURE MATERIALS. SOME OF THESE TARGETS OF THESE SPECIAL INTELLIGENCE SERVICES
+ARE CURRENTLY HEADS OF STATE IN VARIOUS COUNTRIES. I'VE ALSO SEEN INTERNAL
+DOCUMENTS THAT MAKE REFERENCE TO THE USE OF SPECIALIZED INTELLIGENCE SERVICES
+FROM FORMER MEMBERS OF ISRAELI AND RUSSIAN STATE SECURITY SERVICES. OF FURTHER
+CONCERN IS CAMBRIDGE ANALYTICA'S EMPLOYMENT OF PEOPLE CLOSELY ASSOCIATED WITH
+WIKILEAKS AND JULIAN ASSANGE. THE FIRM HIRED TWO SENIOR STAFF BOTH OF HOMEWORK
+-- WHOM WERE AIDES TO THE LAWYER REPRESENTING JULIAN ASSANGE. TO BE CLEAR, THE
+WORK OF CAMBRIDGE ANALYTICA IS NOT EQUIVALENT TO TRADITIONAL MARKETING.
+CAMBRIDGE ANALYTICA SPECIALIZED IN DISINFORMATION, SPREADING RUMORS, AND
+PROPAGANDA. FOR THOSE WHO CLAIM PROFILING DOES NOT WORK, EVEN FACEBOOK APPLIED
+FOR A PATENT ON "DETERMINING USER PERSONALITY CHARACTERISTICS FROM SOCIAL
+NETWORKING SYSTEMS. " DR. ALEKSANDR KOGAN WAS SELECTED TO LEAD THE DATA
+HARVESTING OPERATION, AND OVER 80 MILLION DATA SUBJECTS HAD THEIR PERSONAL DATA
+MISAPPROPRIATED. GIVEN THE SCALE, THIS COULD BE ONE OF THE LARGEST BREACHES OF
+FACEBOOK DATA. CAMBRIDGE ANALYTICA CONTRACTORS ALSO WORKED ON PROGRESSION
+POLITICAL OPERATIONS IN EASTERN EUROPE, INCLUDING THE SUSPECTED RUSSIAN
+INTELLIGENCE AGENTS. THEY FOCUSED ON RUSSIAN EXPANSIONISM IN EASTERN EUROPE. DR.
+KOGAN WAS WORKING ON RUSSIAN STATE-FUNDED RESEARCH PROGRAMS. IN ST. PETERSBURG,
+THEY WERE USING FACEBOOK DATA FOR PSYCHOLOGICAL PROFILING AND RESEARCH SOCIAL
+MEDIA TROLLING. CAMBRIDGE ANALYTICA PITCHED "THE INTERESTING WORK ALEX KOGAN HAS
+BEEN DOING FOR THE RUSSIANS" TO OTHER CLIENTS. CAMBRIDGE ANALYTICA WAS ALSO IN
+CLOSE CONTACT WITH SENIOR EXECUTIVES AT LUKOIL. THEY PRESENTED LUKOIL WITH
+DOCUMENTS OUTLINING EXPERIENCE WITH FORMER -- FOREIGN DISINFORMATION AND
+AMERICAN DATA ASSETS. FACEBOOK ABOUT THESE SCHEMES SINCE 2015. BEFORE THE STORY
+BROKE, FACEBOOK THREATENED TO SUE "THE GUARDIAN" AND BANNED ME FOR
+WHISTLEBLOWING. RESPONDING ON BEHALF OF THE BRITISH GOVERNMENT, THE U.K.
+SECRETARY OF CULTURE CALLED THIS OUTRAGEOUS BECAUSE IT REVEALED THE UNRESTRAINED
+POWER TECHNOLOGY COMPANIES CAN EXERCISE OVER ORDINARY CITIZENS, WHEN A PERSON'S
+ENTIRE ONLINE PRESENCE CAN BE SO QUICKLY ELIMINATED FROM EXISTENCE. THERE'S NO
+CHECK ON THIS POWER , AND IT RAISES A SERIOUS QUESTION FOR REPUBLICANS AND
+DEMOCRATS ALIKE. WHAT HAPPENS TO OUR DEMOCRACY WHEN THESE COMPANIES CAN DELETE
+PEOPLE AT WILL WHEN THEY SPEAK OUT? MARK ZUCKERBERG'S CONTINUAL REFUSAL TO
+COOPERATE WITH THE BRITISH INQUIRY REVEALS THE CHALLENGE OTHER COUNTRIES FACE TO
+HOLD COMPANIES LIKE FACEBOOK TO ACCOUNT. THE BRITISH PARLIAMENT IS CONSIDERING
+THIS AFTER FACEBOOK REFUSED AND FAILED TO ANSWER 40 QUESTIONS. THE SCANDAL HAS
+EXPOSED THAT SOCIAL PLATFORMS ARE NO LONGER SAFE FOR USERS. THESE PLATFORMS ARE
+A CRITICAL PART OF AMERICAN CYBERSPACE, AND ARE IN DESPERATE NEED OF PROTECTION
+AND OVERSIGHT. AND STILL OPTIMISTIC ABOUT THE FUTURE OF TECHNOLOGY, BUT WE
+SHOULD NOT WALK INTO THE FUTURE BLIND, AND IT'S THE JOB OF LAWMAKERS TO ENSURE
+**** Autres éléments
+
+
+
+**** Éléments pour le texte
+
+***** Sources pour le texte
+
+https://www.nytimes.com/2018/03/17/us/politics/cambridge-analytica-trump-campaign.html
+
+**** Le texte
+
+***** Analyse de la situation
+:POINTS:
+sujet amené rapidement et clairement
+Sujet valide
+Définir lien avec ingénierie
+Le rôle des acteurs
+Les acteurs pertinents sont-ils tous mentionnés
+:END:
+
+Durant le début de l'année 2018, la compagnie Cambridge Analytica est tombé dans
+l'oeil public lorsque *Christopher Wylie*, le directeur de recherche de la
+firme, a dénoncé publiquement les pratique douteuses de la compagnie.
+
+L'histoire commence avec un chercheur, le Dr. Kogan de l'Université de
+Cambridge.  Ce dernier, pour de fins de recherche, fait passer un test de
+personnalité à travers une application qui demande aux utilisateurs de donner
+accès à leur données de profil facebook.
+
+Le Dr. Kogan, n'est pas seulement intéressé aux réponses de son questionnaire
+mais aussi aux données de profils facebook. Il utilise ces données à des fins de
+recherche en /psychométrie/.
+
+Plus tard, la compagnie qui s'appellera éventuellement Cambridge Analytica
+entrera en partenariat avec le Dr. Kogan.  *Christopher Wylie* et une équipe de
+dévelopeurs créeront un arsenal de technologies pour faire de la manipulation
+psychologique.
+
+Bienque le scandal soit tombé dans l'oeil publique pour avoir interféré avec les
+élections américaines, nous nous concentreront sur les techniques utilisées par
+Cambridge Analytica seulement.
+
+Pour être bref, ces techniques sont l'équivalent des publicités ciblées.
+Cependant, au lieu d'utiliser l'historique d'achats pour proposer des produits à
+acheter, on utilise l'ensemble complet des informations d'un usager pour ne lui
+présenter que du contenu qui dirigera son opinion vers ce que la compagnie veut.
+
+***** Sources bibliographiques
+
+****** Entrevue avec Christopher Wylie
+
+% INSERER REFERENCE APA POUR
+https://www.theguardian.com/news/2018/mar/17/data-war-whistleblower-christopher-wylie-faceook-nix-bannon-trump
+
+Christopher Wylie avait été une source anonyme pour le journal "The Guardian"
+avant l'éclatement du scandal (il dénonçait alors les pratiques de Cambridge
+Analytica dans le dossier Brexit).  Dans cette entrevue, il avoue publiquement
+son rôle dans l'organisation et prend une part de responsabilité pour la
+création d'un /outil de guerre psychologique/ ("psychological warfare") pour
+Steve Bannon.
+
+****** C-SPAN (Témoignage devant le sénat)
+
+https://www.c-span.org/video/?445621-1/cambridge-analytica-whistleblower-christopher-wylie-testifies-data-privacy
+
+L'enregistrement d'une session du comité juticiaire du Sénat des États-Unis.  M.
+Wylie y est pour prévenir le public et les législateurs du danger que
+représentent les pratiques de Cambridge Analytica posent pour des choses
+fondamentales comme la culture et la démocratie.
+
+****** Wylie explique les pratiques de manipulations
+
+https://www.forbes.com/sites/jeffkauflin/2018/10/01/former-cambridge-analytica-research-director-chris-wylie-explains-how-to-manipulate-peoples-minds/#457759d9c768
+
+Dans cet entrevue avec Forbes, Wylie explique les techniques utilisées et
+l'attitude de la compagnie envers les consommateurs:
+
+#+BEGIN_QUOTE
+When you’re engaging in information warfare, “the agency and autonomy of those people is not a consideration,” he said. “It’s fair game to deceive, undermine, exploit, manipulate and coerce.
+#+END_QUOTE
+***** Problème Éthique
+
+Nous ne savons pas l'étendue de l'effet qu'a eu Cambridge Analytica dans
+l'élection américaine ni dans les autres nombreurses campagnes électorales sur
+lesquelles la compagnie a travaillé.
+
+En effet il est difficile de quantifier l'effet des nouvelles méthodes de
+manipulation de masse et il n'existe aucune lois régissant ces pratiques.  Des
+lois ont suremnt été brisées quant au bris des "Terms of Service" de facebook.
+Mais si les données avaient étées acquises honnêtement, existe-t-il des lois
+empêchant de les utiliser pour les pratiques que dénonce Christopher Wylie?  Je
+crois que non, et c'est pour cette raison que Wylie a témoigné devant le sénat.
+
+Nous valorisons le droit à la vie privée, le respect, l'autonomie.  Les
+techniques dénoncées par Wylie menacent certainement la vie privée, mais
+l'autonomie est aussi menacée quand on voit la puissance de certaines techniques
+de manipulation.  Et le consommateur n'est pas respecté lorsqu'il est traité
+comme du bétail à manipuler.
+
+D'un autre côté, les commerces veulent avoir le plus de clients possibles.  Les
+politiciens veulent rallier le plus de voteurs possibles à leur cause.  Ils
+visent l'excellence et le succès (politique, financier ou idéologique).
+Respecter la vie privée et l'autonomie des autres citoyens et un obstacle à la
+réalisation de ces valeurs.
+
+Nous avons donc un problème éthique.  Je me situe à la place de Christopher
+Wylie en disant
+
+#+BEGIN_QUOTE
+*Est-il éthiquement défendable pour moi, en tant qu'ingénieur informatique, de
+ créer des outils de manipulation psychologique (à la Cambridge Analytica).
+#+END_QUOTE
+
+

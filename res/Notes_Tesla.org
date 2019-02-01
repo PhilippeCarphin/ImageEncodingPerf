@@ -1,0 +1,44 @@
+#+TITLE: Notes about call to Tesla
+
+
+* Things to do : 
+
+** Agenda for tomorrow
+
+- Julie Perrault Bergeron.
+
+julie.perreault-bergeron@tesla.com
+
+- See about reservation transfer, ref conversation with Randal Pace on July 13th
+ 
+- What I told Michel right after
+
+#+BEGIN_QUOTE
+So for the reservation transfer, the guy said that their system can’t handle that until a VIN gets assigned to the car.   Once that happens, a sales person will contact me and I’ll be able to change it at that time.
+
+He is however going to look into whether something can be done to circumvent this.
+#+END_QUOTE
+
+- Michel also has a reservation, can I do something where we switch and he gets
+  his car first?
+
+- What will be the procedure for the transfer of ownership
+
+- Aside from the insurance, and the driver's license, is there anything
+  outstanding about my account
+
+** Change reservation and order to my account
+
+*STORY* Step Dad : Robert Lavoie.
+Reservation was for me.
+I made the order with His account.
+
+*I WANT* To transfer it to my account
+
+*** Cant change now, when the VIN number gets assigned, sales will call me to deal with this
+
+*** The guy will see if there is something that can be done sooner.
+
+** Change Model S to Mom's account or my account
+
+*** 
